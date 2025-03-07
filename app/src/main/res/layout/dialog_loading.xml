@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout   xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+
+        <variable
+            name="dialog"
+            type="com.utc.asm_mob_java.dialog.LoadingDialog" />
+    </data>
+    <LinearLayout
+        android:focusable="true"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:background="@color/transparent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_loading"
+            android:padding="@dimen/dp_16"
+            >
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/blue" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</layout>

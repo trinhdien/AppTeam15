@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Bear Shop</string>
+    <string name="no_data">Không có dữ liệu</string>
+    <string name="welcome_to_bear_shop">Chào mừng đến với BEAR SHOP</string>
+    <string name="user_name">Nhập tên tài khoản</string>
+    <string name="password">Nhập mật khẩu</string>
+    <string name="login">Đăng nhập</string>
+    <string name="signup">Đăng ký</string>
+    <string name="save_pass">Ghi nhớ mật khẩu đăng nhập</string>
+    <string name="for_got_pass">Quên mật khẩu?</string>
+    <string name="create_new_acc">Đăng ký tài khoản?</string>
+    <string name="home">Trang chủ</string>
+    <string name="cart">Giỏ hàng</string>
+    <string name="history">Lịch sử</string>
+    <string name="add">Thêm</string>
+</resources>

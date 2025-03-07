@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="presenter"
+            type="com.utc.asm_mob_java.screen.homescreen.HomePresenter" />
+    </data>
+    <LinearLayout
+        android:background="@color/colorPrimary"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_gravity="center"
+            android:text="Home"
+            android:textSize="@dimen/_40sdp"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="SpUsage" />
+    </LinearLayout>
+</layout>
