@@ -1,6 +1,7 @@
 package com.utc.asm_mob_java.screen.homescreen;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.utc.asm_mob_java.R;
 import com.utc.asm_mob_java.base.basefragment.BaseBindingFragment;
@@ -13,6 +14,7 @@ public class HomeFragment extends BaseBindingFragment<HomeFragmentBinding, HomeP
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     protected int getIdLayoutRes() {
         return R.layout.home_fragment;
@@ -22,6 +24,7 @@ public class HomeFragment extends BaseBindingFragment<HomeFragmentBinding, HomeP
     protected void initData() {
         mPresenter = new HomePresenter(mActivity, this);
         mBinding.setPresenter(mPresenter);
+        mPresenter.loadLocalImages(mBinding.slider);
     }
 
     @Override
@@ -48,4 +51,23 @@ public class HomeFragment extends BaseBindingFragment<HomeFragmentBinding, HomeP
     public void showErr() {
 
     }
+
+    @Override
+    public void onPause() {
+        Log.d("zzzzz", "onPause: ");
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d("zzzzz", "onStop: ");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("zzzzzz", "onResume: ");
+    }
+
 }

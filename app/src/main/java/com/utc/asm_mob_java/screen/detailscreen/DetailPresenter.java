@@ -1,0 +1,35 @@
+package com.utc.asm_mob_java.screen.detailscreen;
+
+import android.content.Context;
+
+import com.bumptech.glide.request.RequestOptions;
+import com.glide.slider.library.SliderLayout;
+import com.glide.slider.library.slidertypes.DefaultSliderView;
+import com.utc.asm_mob_java.R;
+import com.utc.asm_mob_java.base.baseactivity.BasePresenterForm;
+
+public class DetailPresenter extends BasePresenterForm<DetailView> {
+    public DetailPresenter(Context mContext, DetailView mView) {
+        super(mContext, mView);
+    }
+
+    @Override
+    protected void initData() {
+    }
+
+    public void loadLocalImages(SliderLayout sliderLayout) {
+        int[] drawableImages = {R.drawable.poster_1, R.drawable.poster_2, R.drawable.poster_4, R.drawable.poster_6, R.drawable.poster_7, R.drawable.poster_8};
+        for (int image : drawableImages) {
+            DefaultSliderView sliderView = new DefaultSliderView(mActivity);
+            sliderView.image(image);
+            sliderView.setProgressBarVisible(true);
+            sliderView.setOnSliderClickListener(slider -> {
+
+            });
+
+            sliderView.setRequestOption(new RequestOptions().centerCrop());
+            sliderLayout.stopAutoCycle();
+            sliderLayout.addSlider(sliderView);
+        }
+    }
+}

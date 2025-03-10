@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="item"
+            type="com.utc.asm_mob_java.data.model.Poster" />
+        <import type="android.view.View"/>
+    </data>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:visibility="@{item.isShow ? View.GONE : View.VISIBLE}"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_circle" />
+
+        <ImageView
+            android:visibility="@{!item.isShow ? View.GONE : View.VISIBLE}"
+            android:src="@drawable/ic_circle_soild"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:importantForAccessibility="no" />
+    </LinearLayout>
+</layout>

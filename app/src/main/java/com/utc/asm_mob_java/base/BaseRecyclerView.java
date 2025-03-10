@@ -12,9 +12,9 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.utc.asm_mob_java.BR;
 import com.utc.asm_mob_java.R;
 import com.utc.asm_mob_java.callback.OnListenerItemRecyclerView;
 import com.utc.asm_mob_java.callback.OnListenerRecyclerView;
@@ -158,8 +158,8 @@ public class BaseRecyclerView<T> extends RecyclerView.Adapter<BaseRecyclerView<?
 
         public void bind(T mItem) {
             this.mItem = mItem;
-//            mBinding.setVariable(BR.item, mItem);
-//            mBinding.setVariable(BR.viewHolder, this);
+            mBinding.setVariable(BR.item, mItem);
+            mBinding.setVariable(BR.viewHolder, this);
 //            mBinding.setVariable(BR.onChangeSelect, this);
 //            mBinding.setVariable(BR.endItem, mList.size() - 1 == getAdapterPosition());
 //

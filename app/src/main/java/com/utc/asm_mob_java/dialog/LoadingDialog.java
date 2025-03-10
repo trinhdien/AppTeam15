@@ -17,9 +17,6 @@ public class LoadingDialog extends Dialog {
         super(context, R.style.DialogLoading);
     }
 
-    public static LoadingDialog newInstance(Context context) {
-        return new LoadingDialog(context);
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
