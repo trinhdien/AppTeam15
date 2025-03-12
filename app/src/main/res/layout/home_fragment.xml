@@ -16,13 +16,12 @@
         android:background="@color/colorPrimary">
 
         <LinearLayout
-            android:paddingVertical="@dimen/dp_10"
+            android:padding="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="true"
             android:focusable="true"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/dp_10">
+            android:orientation="vertical">
 
             <EditText
                 android:layout_width="match_parent"
@@ -37,13 +36,18 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sdp"
                 tools:ignore="SpUsage" />
-
-            <com.glide.slider.library.SliderLayout
-                android:id="@+id/slider"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_150sdp"
+            <androidx.cardview.widget.CardView
                 android:layout_marginTop="@dimen/dp_10"
-                app:indicator_visibility="visible" />
+                app:cardCornerRadius="@dimen/dp_20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.glide.slider.library.SliderLayout
+                    android:id="@+id/slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_150sdp"
+                    app:indicator_visibility="visible" />
+            </androidx.cardview.widget.CardView>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:adapter="@{presenter.mAdapter}"
