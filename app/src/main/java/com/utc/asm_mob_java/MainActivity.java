@@ -1,6 +1,7 @@
 package com.utc.asm_mob_java;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,7 +14,12 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.utc.asm_mob_java.screen.loginscreen.LoginFragment;
+import com.utc.asm_mob_java.screen.mainscreen.MainScreenActivity;
 import com.utc.asm_mob_java.utils.Common;
+import com.utc.asm_mob_java.utils.CommonActivity;
+import com.utc.asm_mob_java.utils.Constants;
+import com.utc.asm_mob_java.utils.SharedPrefManager;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,13 +28,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Common.replaceFragment(MainActivity.this, R.id.main, LoginFragment.newInstance());
-            }
-        }, 2000);
+        fakeData();
     }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -54,4 +56,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void fakeData() {
+        SharedPrefManager mSharedPrefManager = new SharedPrefManager(this);
+        if (!CommonActivity.isNullOrEmpty(mSharedPrefManager.getUserLogin())) {
+            gotoMainScreen(mSharedPrefManager.getUserLogin());
+        } else {
+            new Handler().postDelayed(() -> Common.replaceFragment(MainActivity.this, R.id.main, LoginFragment.newInstance()), 2000);
+        }
+    }
+
+    private void gotoMainScreen(String user) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.BundleKey.USER, user);
+        Intent intent = new Intent(this, MainScreenActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

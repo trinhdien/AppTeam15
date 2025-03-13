@@ -1,5 +1,6 @@
 package com.utc.asm_mob_java.screen.morescreen;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.utc.asm_mob_java.R;
@@ -47,5 +48,10 @@ public class MoreFragment extends BaseBindingFragment<MoreFragmentBinding, MoreP
     @Override
     public void showErr() {
 
+    }
+
+    @Override
+    public void setImageBitMap(Bitmap bitmap) {
+        mBinding.imgAvt.setImageBitmap(bitmap);
     }
 }

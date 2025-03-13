@@ -13,12 +13,12 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
         android:fitsSystemWindows="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary">
 
             <ImageView
                 android:id="@+id/ic_back"
@@ -26,6 +26,7 @@
                 android:layout_height="@dimen/dp_30"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
+                android:importantForAccessibility="no"
                 android:onClick="@{v -> presenter.onCancel()}"
                 android:src="@drawable/ic_back" />
 
@@ -85,7 +86,7 @@
                             android:layout_centerVertical="true"
                             android:layout_gravity="end"
                             android:layout_toStartOf="@+id/tv_sold"
-                            android:text="29.000.000 VNĐ"
+                            android:text="@{presenter.mProduct.price + ` VNĐ`}"
                             android:textColor="@color/price"
                             android:textSize="@dimen/_16sdp"
                             tools:ignore="SpUsage" />
@@ -97,7 +98,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/dp_10"
-                            android:text="Đã bán 1000k"
+                            android:text="@{`Đã bán ` + presenter.mProduct.sold}"
                             android:textColor="@color/black" />
                     </RelativeLayout>
 
@@ -121,9 +122,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="Một chú gấu siêu cute"
+                            android:text="@{presenter.mProduct.title}"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_14sdp"
+                            tools:ignore="SpUsage" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -139,13 +141,14 @@
                             android:layout_height="match_parent"
                             android:text="Chi tiết sản phẩm"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/_14sdp" />
+                            android:textSize="@dimen/_14sdp"
+                            tools:ignore="SpUsage" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_5"
-                            android:text="Đây là sản phẩm đỉnh cao nhất thời đại"
+                            android:text="@{presenter.mProduct.description}"
                             android:textColor="@color/black" />
 
                         <View
@@ -161,15 +164,6 @@
                             android:text="Hết xem thêm"
                             android:textColor="@color/black"
                             android:visibility="gone" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/dp_5"
-                            android:drawableEnd="@drawable/ic_down_24"
-                            android:text="Xem thêm"
-                            android:textColor="@color/black" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -188,6 +182,7 @@
                 android:weightSum="5">
 
                 <LinearLayout
+                    android:onClick="@{v -> presenter.onClickAddCart()}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
@@ -218,7 +213,7 @@
                     android:layout_weight="3"
                     android:background="@color/price"
                     android:gravity="center"
-                    android:onClick="@{v -> presenter.showBottom()}"
+                    android:onClick="@{v -> presenter.showBottomSheet()}"
                     android:orientation="vertical"
                     android:padding="@dimen/dp_5">
 
@@ -242,13 +237,6 @@
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
-
-        <include
-            android:id="@+id/bottom_sheet"
-            layout="@layout/layout_bottom_sheet_buy"
-            app:behavior_hideable="true"
-            app:behavior_peekHeight="0dp"
-            app:presenter="@{presenter}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

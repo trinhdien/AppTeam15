@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class Product implements Serializable {
     @Expose
-    private String img;
+    private Integer img;
     @Expose
     private String title;
     @Expose
@@ -15,22 +15,24 @@ public class Product implements Serializable {
     private String sold;
     @Expose
     private String description;
+    @Expose String number;
 
     public Product() {
     }
 
-    public Product(String img, String title, String price, String sold) {
+    public Product(Integer img, String title, String price, String sold, String description) {
         this.img = img;
         this.title = title;
         this.price = price;
         this.sold = sold;
+        this.description = description;
     }
 
-    public String getImg() {
+    public Integer getImg() {
         return img;
     }
 
-    public void setImg(String img) {
+    public void setImg(Integer img) {
         this.img = img;
     }
 
@@ -64,5 +66,13 @@ public class Product implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 }

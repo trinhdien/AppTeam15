@@ -11,14 +11,11 @@
     </data>
 
     <LinearLayout
-        android:padding="@dimen/dp_10"
-        android:background="@drawable/bg_bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_sheet"
         android:orientation="vertical"
-        app:behavior_hideable="true"
-        app:behavior_peekHeight="0dp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+        android:padding="@dimen/dp_10">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -26,21 +23,27 @@
             android:orientation="horizontal"
             tools:ignore="UselessParent">
 
-            <ImageView
-                android:id="@+id/img_view"
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="@dimen/dp_100"
+            <androidx.cardview.widget.CardView
                 android:layout_alignParentStart="true"
-                android:importantForAccessibility="no"
-                android:scaleType="centerCrop"
-                android:src="@drawable/poster_1" />
+                android:id="@+id/img_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/dp_10">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_100"
+                    android:layout_height="@dimen/dp_100"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerCrop"
+                    app:imageSrc="@{presenter.mProduct.img}" />
+            </androidx.cardview.widget.CardView>
 
             <ImageView
+                android:id="@+id/btn_close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:importantForAccessibility="no"
-                android:onClick="@{v -> presenter.closeBottom()}"
                 android:src="@drawable/ic_close" />
 
             <TextView
@@ -50,7 +53,7 @@
                 android:layout_above="@+id/textView"
                 android:layout_marginStart="@dimen/dp_20"
                 android:layout_toEndOf="@+id/img_view"
-                android:text="Giá: 29.000.000 VNĐ"
+                android:text="@{presenter.mProduct.price + ` VNĐ`}"
                 android:textColor="@color/price"
                 android:textSize="@dimen/_16sdp" />
 
@@ -61,7 +64,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="@dimen/dp_20"
                 android:layout_toEndOf="@+id/img_view"
-                android:text="Kho: 1000k"
+                android:text="@{`Kho: ` + presenter.mProduct.number}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sdp" />
         </RelativeLayout>
@@ -79,13 +82,16 @@
             android:layout_toEndOf="@+id/img_view"
             android:text="Loại"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/_14sdp"
+            android:visibility="gone"
+            tools:ignore="ObsoleteLayoutParam,SpUsage" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
             android:adapter="@{presenter.adapterOption}"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="3"
             tools:listitem="@layout/item_option" />
@@ -114,6 +120,8 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:onClick="@{v -> presenter.onRemove()}"
+                    android:id="@+id/remove"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="@dimen/_5sdp"
@@ -129,6 +137,7 @@
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/tv_number"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_edt_white_no_boder"
@@ -137,11 +146,13 @@
                     android:inputType="number"
                     android:maxLines="1"
                     android:paddingVertical="@dimen/dp_5"
-                    android:text="0"
+                    android:text="@={presenter.tvNumber}"
                     android:textAlignment="center"
                     tools:ignore="LabelFor" />
 
                 <LinearLayout
+                    android:onClick="@{v -> presenter.onAdd()}"
+                    android:id="@+id/add"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/_5sdp"
@@ -165,14 +176,13 @@
             android:background="@color/black" />
 
         <TextView
-            android:layout_marginBottom="@dimen/dp_40"
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_buy_now"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_20"
             android:background="@drawable/bg_btn_buy_now"
             android:paddingVertical="@dimen/_10sdp"
-            android:text="Mua ngay"
+            android:text="@string/btn_buy_now"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="@dimen/_16sdp"

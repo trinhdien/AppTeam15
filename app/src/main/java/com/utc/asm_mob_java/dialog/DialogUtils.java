@@ -9,11 +9,13 @@ import android.view.LayoutInflater;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
+import com.utc.asm_mob_java.R;
+
 public class DialogUtils {
-    private void showCustomDialog(Context context, int layoutId, DialogInterface.OnClickListener yesListener, DialogInterface.OnClickListener cancelListener) {
+    private void showConfirmDialog(Context context, DialogInterface.OnClickListener yesListener, DialogInterface.OnClickListener cancelListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-        ViewDataBinding binding = DataBindingUtil.inflate(inflater, layoutId, null, false);
+        ViewDataBinding binding = DataBindingUtil.inflate(inflater, R.layout.dialog_confirm, null, false);
         builder.setView(binding.getRoot());
         AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
