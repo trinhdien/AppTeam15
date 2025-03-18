@@ -24,7 +24,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:adapter="@{presenter.mAdapterHistory}"
+            android:adapter="@{presenter.mAdapterOrder}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="3"
             tools:listitem="@layout/item_cart" />

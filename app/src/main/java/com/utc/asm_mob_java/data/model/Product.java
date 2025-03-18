@@ -1,6 +1,7 @@
 package com.utc.asm_mob_java.data.model;
 
 import com.google.gson.annotations.Expose;
+import com.utc.asm_mob_java.utils.CommonActivity;
 
 import java.io.Serializable;
 
@@ -15,7 +16,16 @@ public class Product implements Serializable {
     private String sold;
     @Expose
     private String description;
-    @Expose String number;
+    @Expose
+    private String number;
+    @Expose
+    private String numberBuy;
+    @Expose
+    private String numberBuyTemp;
+    @Expose
+    private String priceTemp;
+    @Expose
+    private String status;
 
     public Product() {
     }
@@ -74,5 +84,37 @@ public class Product implements Serializable {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getNumberBuy() {
+        return numberBuy;
+    }
+
+    public void setNumberBuy(String numberBuy) {
+        this.numberBuy = numberBuy;
+    }
+
+    public String getNumberBuyTemp() {
+        return CommonActivity.isNullOrEmpty(numberBuyTemp) ?  "1" : numberBuyTemp;
+    }
+
+    public void setNumberBuyTemp(String numberBuyTemp) {
+        this.numberBuyTemp = numberBuyTemp;
+    }
+
+    public String getPriceTemp() {
+        return priceTemp == null ? price : priceTemp;
+    }
+
+    public void setPriceTemp(String priceTemp) {
+        this.priceTemp = priceTemp;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

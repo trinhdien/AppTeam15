@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="presenter"
+            type="com.utc.asm_mob_java.dialog.dialogconfirm.ConfirmDialog" />
     </data>
 
     <LinearLayout
@@ -10,5 +13,86 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:paddingVertical="@dimen/dp_5">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_toStartOf="@+id/img_close"
+                android:text="@string/confirm"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp_20"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:onClick="@{v -> presenter.onCancelClick()}"
+                android:id="@+id/img_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_close" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/dp_20"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp_16" />
+
+        <LinearLayout
+            android:layout_marginBottom="@dimen/dp_20"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:onClick="@{v -> presenter.onCancelClick()}"
+                android:layout_marginEnd="@dimen/dp_5"
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_cancel"
+                android:paddingVertical="@dimen/_10sdp"
+                android:text="@string/cancel"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                tools:ignore="SpUsage" />
+
+            <TextView
+                android:onClick="@{v -> presenter.onConfirmClick()}"
+                android:layout_marginStart="@dimen/dp_5"
+                android:id="@+id/btn_confirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_buy_now"
+                android:paddingVertical="@dimen/_10sdp"
+                android:text="@string/confirm"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp"
+                tools:ignore="SpUsage" />
+        </LinearLayout>
     </LinearLayout>
 </layout>

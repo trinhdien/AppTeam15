@@ -8,6 +8,7 @@
         <variable
             name="presenter"
             type="com.utc.asm_mob_java.screen.cartscreen.CartPresenter" />
+        <import type="android.view.View"/>
     </data>
 
     <RelativeLayout
@@ -50,12 +51,16 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:visibility="@{presenter.isChooseAll ? View.GONE : View.VISIBLE}"
+                        android:onClick="@{v -> presenter.onChooseAll()}"
                         android:layout_width="@dimen/dp_20"
                         android:layout_height="@dimen/dp_20"
                         android:importantForAccessibility="no"
                         android:src="@drawable/ic_cb_not_choose" />
 
                     <ImageView
+                        android:visibility="@{!presenter.isChooseAll ? View.GONE : View.VISIBLE}"
+                        android:onClick="@{v -> presenter.onChooseAll()}"
                         android:layout_width="@dimen/dp_20"
                         android:layout_height="@dimen/dp_20"
                         android:importantForAccessibility="no"
@@ -92,7 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="90.000.000 VNĐ"
+                        android:text="@{presenter.tvPrice + ` VNĐ`}"
                         android:textColor="@color/price"
                         android:textSize="@dimen/_14sdp"
                         tools:ignore="SpUsage" />

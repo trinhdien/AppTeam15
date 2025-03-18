@@ -7,10 +7,14 @@
 
         <variable
             name="item"
-            type="com.utc.asm_mob_java.data.model.History" />
+            type="com.utc.asm_mob_java.data.model.Order" />
+        <variable
+            name="viewHolder"
+            type="com.utc.asm_mob_java.base.BaseRecyclerView.BaseViewHolder" />
     </data>
 
     <androidx.cardview.widget.CardView
+        android:onClick="@{v-> viewHolder.onClickItem()}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
@@ -42,7 +46,7 @@
                         android:layout_marginStart="-1dp"
                         android:importantForAccessibility="no"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/poster_1" />
+                        app:imageSrc="@{item.product.img}" />
                 </androidx.cardview.widget.CardView>
 
                 <LinearLayout
@@ -57,7 +61,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Con gấu cute nhất thế giới"
+                        android:text="@{item.product.title}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14sdp"
                         tools:ignore="SpUsage" />
@@ -67,7 +71,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_5"
-                        android:text="Giá: 29.000.000 VNĐ"
+                        android:text="@{`Giá: ` + item.product.price + ` VNĐ`}"
                         android:textColor="@color/price"
                         android:textSize="@dimen/_16sdp"
                         tools:ignore="SpUsage" />
@@ -77,22 +81,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_5"
-                        android:text="Ngày mua: 03/09/2003"
+                        android:text="@{`Ngày mua: ` + item.dateTime}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14sdp"
                         tools:ignore="SpUsage" />
 
                     <LinearLayout
-                        android:layout_marginTop="@dimen/dp_5"
-                        android:gravity="center_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Trạng Thái: "
+                            android:text="@{@string/status + `: `}"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_14sdp"
                             tools:ignore="SpUsage" />
@@ -100,7 +104,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Đang giao"
+                            android:text="@{item.product.status}"
                             android:textColor="@color/green"
                             android:textSize="@dimen/_14sdp"
                             tools:ignore="SpUsage" />

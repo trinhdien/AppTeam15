@@ -23,4 +23,13 @@
     <string name="log_out">Đăng xuất</string>
     <string name="add_delivery_address">Thêm địa chỉ</string>
     <string name="btn_buy_now">Mua ngay</string>
+    <string name="add_to_cart_success">Thêm vào giỏ hàng thành công</string>
+    <string name="number">Số lượng</string>
+    <string name="add_to_cart">Thêm vào giỏ hàng</string>
+    <string name="order_success">Đặt hàng thành công</string>
+    <string name="buy_with_price">Mua với giá</string>
+    <string name="status">Trạng Thái</string>
+    <string name="delivering">Đang giao hàng</string>
+    <string name="confirm">Xác nhận</string>
+    <string name="cancel">Huỷ</string>
 </resources>

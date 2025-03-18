@@ -53,7 +53,7 @@
                 android:layout_above="@+id/textView"
                 android:layout_marginStart="@dimen/dp_20"
                 android:layout_toEndOf="@+id/img_view"
-                android:text="@{presenter.mProduct.price + ` VNĐ`}"
+                android:text="@{presenter.tvPrice + ` VNĐ`}"
                 android:textColor="@color/price"
                 android:textSize="@dimen/_16sdp" />
 
@@ -106,9 +106,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:text="Số lượng"
+                android:text="@string/number"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_14sdp"
+                tools:ignore="RelativeOverlap,SpUsage" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -180,9 +181,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_20"
+            android:onClick="@{v -> presenter.onBuyBow()}"
             android:background="@drawable/bg_btn_buy_now"
             android:paddingVertical="@dimen/_10sdp"
             android:text="@string/btn_buy_now"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sdp"
+            app:cornerRadius="@dimen/_10sdp"
+            tools:ignore="SpUsage" />
+        <TextView
+            android:onClick="@{v -> presenter.onClickAddCart()}"
+            android:id="@+id/btn_add_to_cart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/bg_btn_buy_now"
+            android:paddingVertical="@dimen/_10sdp"
+            android:text="@string/add_to_cart"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="@dimen/_16sdp"

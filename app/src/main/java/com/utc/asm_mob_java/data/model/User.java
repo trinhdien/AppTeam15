@@ -24,7 +24,9 @@ public class User {
     @Expose
     private boolean isLogin;
     @Expose
-    private List<Product> listCart;
+    private List<Cart> listCart;
+    @Expose
+    private List<Order> listOrder;
 
     public String getName() {
         return name;
@@ -109,11 +111,19 @@ public class User {
         isLogin = login;
     }
 
-    public List<Product> getListCart() {
+    public List<Cart> getListCart() {
         return listCart;
     }
 
-    public void setListCart(List<Product> listCart) {
+    public void setListCart(List<Cart> listCart) {
         this.listCart = listCart;
+    }
+
+    public List<Order> getListOrder() {
+        return listOrder;
+    }
+
+    public void setListOrder(List<Order> listOrder) {
+        this.listOrder = listOrder;
     }
 }

@@ -2,6 +2,8 @@ package com.utc.asm_mob_java.base;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -160,6 +162,26 @@ public class BaseRecyclerView<T> extends RecyclerView.Adapter<BaseRecyclerView<?
             this.mItem = mItem;
             mBinding.setVariable(BR.item, mItem);
             mBinding.setVariable(BR.viewHolder, this);
+            if (mBinding.getRoot().findViewById(R.id.edt_number) != null) {
+                EditText editText = mBinding.getRoot().findViewById(R.id.edt_number);
+                editText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        if (listenerRecyclerView != null)
+                            listenerRecyclerView.afterTextChanged(mItem, getAdapterPosition(), editable);
+                    }
+                });
+            }
 //            mBinding.setVariable(BR.onChangeSelect, this);
 //            mBinding.setVariable(BR.endItem, mList.size() - 1 == getAdapterPosition());
 //
@@ -235,6 +257,11 @@ public class BaseRecyclerView<T> extends RecyclerView.Adapter<BaseRecyclerView<?
                 }
 
             };
+        }
+        public void onClickItem4() {
+            if (CommonActivity.isNullOrEmpty(mList)) return;
+            if (listenerRecyclerView != null)
+                listenerRecyclerView.onClickItem4(mItem, getAdapterPosition());
         }
     }
 

@@ -182,11 +182,11 @@
                 android:weightSum="5">
 
                 <LinearLayout
-                    android:onClick="@{v -> presenter.onClickAddCart()}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:gravity="center"
+                    android:onClick="@{v -> presenter.showBottomSheet(`1`)}"
                     android:orientation="vertical"
                     android:padding="@dimen/dp_5"
                     tools:ignore="UseCompoundDrawables">
@@ -213,7 +213,7 @@
                     android:layout_weight="3"
                     android:background="@color/price"
                     android:gravity="center"
-                    android:onClick="@{v -> presenter.showBottomSheet()}"
+                    android:onClick="@{v -> presenter.showBottomSheet(`0`)}"
                     android:orientation="vertical"
                     android:padding="@dimen/dp_5">
 
@@ -222,7 +222,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/dp_5"
-                        android:text="Mua với giá"
+                        android:text="@string/buy_with_price"
                         android:textAlignment="center"
                         android:textColor="@color/white" />
 
@@ -231,7 +231,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/dp_5"
-                        android:text="29.000.000 VNĐ"
+                        android:text="@{presenter.mProduct.price + ` VNĐ`}"
                         android:textAlignment="center"
                         android:textColor="@color/white" />
                 </LinearLayout>

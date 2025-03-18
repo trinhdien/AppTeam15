@@ -1,5 +1,7 @@
 package com.utc.asm_mob_java.callback;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
@@ -40,6 +42,8 @@ public abstract class OnListenerRecyclerView<T> {
     public void onUncheckItem(T item, int position) {
 
     }
-    public void onFocusChange(T item, EditText editText, boolean hasFocus){}
 
+    public void onFocusChange(T item, EditText editText, boolean hasFocus) {
+    }
+    public void afterTextChanged(T item, int position, Editable editable){}
 }
