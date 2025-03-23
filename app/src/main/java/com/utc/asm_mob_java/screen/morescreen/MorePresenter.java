@@ -1,16 +1,13 @@
 package com.utc.asm_mob_java.screen.morescreen;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import androidx.databinding.ObservableField;
 
@@ -18,16 +15,17 @@ import com.utc.asm_mob_java.MainActivity;
 import com.utc.asm_mob_java.R;
 import com.utc.asm_mob_java.base.BaseRecyclerView;
 import com.utc.asm_mob_java.base.baseactivity.BasePresenterForm;
+import com.utc.asm_mob_java.callback.OnListenerRecyclerView;
 import com.utc.asm_mob_java.data.model.DeliveryAddress;
 import com.utc.asm_mob_java.data.model.User;
+import com.utc.asm_mob_java.dialog.dialogeditprofile.DialogEditProfile;
+import com.utc.asm_mob_java.dialog.dialogeditprofile.EditProfileListener;
+import com.utc.asm_mob_java.screen.chooseaddress.ChooseAddressFragment;
 import com.utc.asm_mob_java.utils.Common;
 import com.utc.asm_mob_java.utils.GsonUtils;
-import com.utc.asm_mob_java.utils.Logger;
 import com.utc.asm_mob_java.utils.SharedPrefManager;
 import com.utc.asm_mob_java.utils.StringUtils;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -58,6 +56,17 @@ public class MorePresenter extends BasePresenterForm<MoreView> {
         mView.setImageBitMap(StringUtils.convertBase64ToBitmap(Objects.requireNonNull(mUser.get()).getAvt()));
         mListAddress.addAll(Objects.requireNonNull(mUser.get()).getAddress());
         Objects.requireNonNull(mAdapterAddress.get()).notifyDataSetChanged();
+        Objects.requireNonNull(mAdapterAddress.get()).setListenerRecyclerView(new OnListenerRecyclerView<DeliveryAddress>() {
+            @Override
+            public void onClickItem(DeliveryAddress item, int position) {
+                super.onClickItem(item, position);
+                for (DeliveryAddress address : mListAddress) {
+                    address.setDefault(false);
+                }
+                item.setDefault(true);
+                Objects.requireNonNull(mAdapterAddress.get()).notifyDataSetChanged();
+            }
+        });
     }
 
     public void showCustomMenu(View anchorView) {
@@ -80,7 +89,7 @@ public class MorePresenter extends BasePresenterForm<MoreView> {
 
         // Xử lý sự kiện click trong menu
         popupView.findViewById(R.id.menu_edit_profile).setOnClickListener(v -> {
-            // Xử lý chỉnh sửa thông tin
+            showDialogEditProfile();
             popupWindow.dismiss();
         });
 
@@ -92,5 +101,35 @@ public class MorePresenter extends BasePresenterForm<MoreView> {
             mActivity.finish();
             popupWindow.dismiss();
         });
+    }
+
+    public void showDialogEditProfile() {
+        EditProfileListener listener = new EditProfileListener() {
+
+            @Override
+            public void onConfirm(String name, String email, String numberPhone, String birthday) {
+                Objects.requireNonNull(mUser.get()).setName(name);
+                Objects.requireNonNull(mUser.get()).setEmail(email);
+                Objects.requireNonNull(mUser.get()).setPhone(numberPhone);
+                Objects.requireNonNull(mUser.get()).setDateOfBirth(birthday);
+                mSharedPrefManager.saveUserLogin(GsonUtils.Object2String(mUser.get()));
+                mUser.set(GsonUtils.String2Object(mSharedPrefManager.getUserLogin(), User.class));
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        };
+        DialogEditProfile dialog = new DialogEditProfile(listener,
+                Objects.requireNonNull(mUser.get()).getName(),
+                Objects.requireNonNull(mUser.get()).getEmail(),
+                Objects.requireNonNull(mUser.get()).getPhone(),
+                Objects.requireNonNull(mUser.get()).getDateOfBirth());
+        dialog.show(mActivity.getSupportFragmentManager(), "");
+    }
+
+    public void onClickAddress() {
+        Common.replaceFragment(mActivity,R.id.frame_main, ChooseAddressFragment.newInstance());
     }
 }

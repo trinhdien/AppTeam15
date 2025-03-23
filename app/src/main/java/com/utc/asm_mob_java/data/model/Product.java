@@ -4,8 +4,11 @@ import com.google.gson.annotations.Expose;
 import com.utc.asm_mob_java.utils.CommonActivity;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Product implements Serializable {
+    @Expose
+    private String id;
     @Expose
     private Integer img;
     @Expose
@@ -26,16 +29,20 @@ public class Product implements Serializable {
     private String priceTemp;
     @Expose
     private String status;
+    @Expose
+    private List<Option> lstOption;
 
     public Product() {
     }
 
-    public Product(Integer img, String title, String price, String sold, String description) {
+    public Product(String id,Integer img, String title, String price, String sold, String description, String number) {
         this.img = img;
         this.title = title;
         this.price = price;
         this.sold = sold;
         this.description = description;
+        this.number = number;
+        this.id = id;
     }
 
     public Integer getImg() {
@@ -116,5 +123,21 @@ public class Product implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<Option> getLstOption() {
+        return lstOption;
+    }
+
+    public void setLstOption(List<Option> lstOption) {
+        this.lstOption = lstOption;
     }
 }

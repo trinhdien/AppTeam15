@@ -18,12 +18,12 @@ public class DetailActivity extends BaseBindingActivity<DetailActivityBinding, D
 
     @Override
     public void showLoading() {
-        showLoading();
+        showLoadingDialog(false);
     }
 
     @Override
     public void hideLoading() {
-        hideLoading();
+        hideLoadingDialog();
     }
 
     @Override

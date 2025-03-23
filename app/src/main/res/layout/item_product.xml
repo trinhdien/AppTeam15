@@ -15,6 +15,8 @@
     </data>
 
     <androidx.cardview.widget.CardView
+        android:clickable="true"
+        android:focusable="true"
         app:cardCornerRadius="@dimen/dp_20"
         android:layout_marginStart="@dimen/dp_5"
         android:layout_marginTop="@dimen/dp_10"

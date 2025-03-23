@@ -20,6 +20,7 @@
         android:padding="@dimen/dp_10">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:visibility="@{presenter.isEmpty ? View.GONE : View.VISIBLE}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/combo_btn"
@@ -31,6 +32,7 @@
             tools:listitem="@layout/item_cart" />
 
         <LinearLayout
+            android:visibility="@{presenter.isEmpty ? View.GONE : View.VISIBLE}"
             android:id="@+id/combo_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -117,5 +119,30 @@
                 app:cornerRadius="@dimen/_10sdp"
                 tools:ignore="SpUsage" />
         </LinearLayout>
+        <LinearLayout
+            tools:visibility="gone"
+            android:visibility="@{!presenter.isEmpty ? View.GONE : View.VISIBLE}"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_empty"
+                android:layout_width="@dimen/dp_150"
+                android:layout_height="@dimen/dp_150"/>
+            <TextView
+                android:layout_margin="@dimen/dp_10"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp_16"
+                android:text="@string/warning_empty_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="SpUsage" />
+        </LinearLayout>
+
     </RelativeLayout>
 </layout>

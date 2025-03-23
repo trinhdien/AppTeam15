@@ -121,25 +121,27 @@
             android:layout_below="@+id/ln_profile"
             android:layout_marginTop="@dimen/dp_20"
             android:text="@string/delivery_address"
-            android:textColor="@color/black"
+            android:textColor="@color/price"
             android:textSize="@dimen/_16sdp"
             tools:ignore="SpUsage" />
 
         <TextView
+            android:onClick="@{v -> presenter.onClickAddress()}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ln_profile"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/dp_20"
             android:text="@string/add_delivery_address"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_16sdp" />
+            android:textColor="@color/price"
+            android:textSize="@dimen/_16sdp"
+            tools:ignore="SpUsage" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_delivery_address"
-            android:layout_marginTop="-1dp"
+            android:layout_marginTop="@dimen/dp_5"
             android:adapter="@{presenter.mAdapterAddress}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="3"

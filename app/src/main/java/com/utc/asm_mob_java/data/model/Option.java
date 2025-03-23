@@ -2,7 +2,8 @@ package com.utc.asm_mob_java.data.model;
 
 public class Option {
     private String name;
-    private int image;
+    private Integer image;
+    private String price;
 
     public String getName() {
         return name;
@@ -16,7 +17,7 @@ public class Option {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(Integer image) {
         this.image = image;
     }
 }

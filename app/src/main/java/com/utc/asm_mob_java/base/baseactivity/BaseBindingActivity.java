@@ -55,7 +55,6 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, K> extends 
                 view.getGlobalVisibleRect(outRect);
                 if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
                     hideKeyboard();
-                    view.clearFocus();
                 }
             }
         }
@@ -68,6 +67,7 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding, K> extends 
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            view.clearFocus();
         }
     }
 }

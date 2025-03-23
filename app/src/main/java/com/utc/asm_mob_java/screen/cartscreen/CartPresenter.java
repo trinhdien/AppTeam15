@@ -32,6 +32,7 @@ import java.util.Objects;
 
 public class CartPresenter extends BasePresenterForm<CartView> {
     public ObservableBoolean isChooseAll;
+    public ObservableBoolean isEmpty;
     public ObservableField<BaseRecyclerView<Cart>> mAdapterCart;
     public ObservableField<String> tvPrice;
     private List<Cart> mListCart;
@@ -44,11 +45,15 @@ public class CartPresenter extends BasePresenterForm<CartView> {
 
     @Override
     protected void initData() {
+        isEmpty = new ObservableBoolean(false);
         isChooseAll = new ObservableBoolean(false);
         mListCart = new ArrayList<>();
         mSharedPrefManager = new SharedPrefManager(mActivity);
         user = GsonUtils.String2Object(mSharedPrefManager.getUserLogin(), User.class);
         mListCart = Objects.requireNonNull(user).getListCart();
+        if(CommonActivity.isNullOrEmpty(mListCart)){
+            isEmpty.set(true);
+        }
         mAdapterCart = new ObservableField<>(new BaseRecyclerView<>(mActivity, mListCart, R.layout.item_cart));
         tvPrice = new ObservableField<>("0");
         Objects.requireNonNull(mAdapterCart.get()).setListenerRecyclerView(new OnListenerRecyclerView<Cart>() {

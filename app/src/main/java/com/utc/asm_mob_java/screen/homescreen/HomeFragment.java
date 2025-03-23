@@ -65,5 +65,4 @@ public class HomeFragment extends BaseBindingFragment<HomeFragmentBinding, HomeP
     public void onResume() {
         super.onResume();
     }
-
 }

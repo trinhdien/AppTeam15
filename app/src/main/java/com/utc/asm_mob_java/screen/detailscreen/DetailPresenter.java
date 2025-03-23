@@ -5,7 +5,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.databinding.ObservableField;
@@ -13,6 +15,7 @@ import androidx.databinding.ObservableField;
 import com.bumptech.glide.request.RequestOptions;
 import com.glide.slider.library.SliderLayout;
 import com.glide.slider.library.slidertypes.DefaultSliderView;
+import com.glide.slider.library.tricks.ViewPagerEx;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.utc.asm_mob_java.R;
 import com.utc.asm_mob_java.base.BaseRecyclerView;
@@ -23,6 +26,8 @@ import com.utc.asm_mob_java.data.model.Order;
 import com.utc.asm_mob_java.data.model.Product;
 import com.utc.asm_mob_java.data.model.User;
 import com.utc.asm_mob_java.databinding.LayoutBottomSheetBuyBinding;
+import com.utc.asm_mob_java.dialog.BaseListener;
+import com.utc.asm_mob_java.dialog.dialogconfirm.ConfirmDialog;
 import com.utc.asm_mob_java.utils.CommonActivity;
 import com.utc.asm_mob_java.utils.GsonUtils;
 import com.utc.asm_mob_java.utils.SharedPrefManager;
@@ -62,7 +67,7 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
     }
 
     public void loadLocalImages(SliderLayout sliderLayout) {
-        int[] drawableImages = {R.drawable.poster_1, R.drawable.poster_2, R.drawable.poster_4, R.drawable.poster_6, R.drawable.poster_7, R.drawable.poster_8};
+        int[] drawableImages = {R.drawable.poster_1, R.drawable.poster_2, R.drawable.poster_3, R.drawable.poster_4, R.drawable.poster_5, R.drawable.poster_6, R.drawable.poster_7, R.drawable.poster_8};
         for (int image : drawableImages) {
             DefaultSliderView sliderView = new DefaultSliderView(mActivity);
             sliderView.image(image);
@@ -76,6 +81,22 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
             sliderLayout.addSlider(sliderView);
         }
         tvIndexImage.set("1/" + drawableImages.length);
+        sliderLayout.addOnPageChangeListener(new ViewPagerEx.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                tvIndexImage.set(position + 1 + "/" + drawableImages.length);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -88,6 +109,14 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(mActivity);
         LayoutBottomSheetBuyBinding binding = LayoutBottomSheetBuyBinding.inflate(mActivity.getLayoutInflater());
         bottomSheetDialog.setContentView(binding.getRoot());
+        binding.getRoot().setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                hideKeyboard(view);
+                return false;
+            }
+        });
         binding.setPresenter(this);
         if ("0".equalsIgnoreCase(actionCode)) {
             binding.btnAddToCart.setVisibility(View.GONE);
@@ -130,20 +159,32 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
     }
 
     public void onClickAddCart() {
-        List<Cart> mListCart;
-        if (CommonActivity.isNullOrEmpty(Objects.requireNonNull(user).getListCart())) {
-            mListCart = new ArrayList<>();
+        BaseListener confirmListener = new BaseListener() {
+            @Override
+            public void onConfirm() {
+                List<Cart> mListCart;
+                if (CommonActivity.isNullOrEmpty(Objects.requireNonNull(user).getListCart())) {
+                    mListCart = new ArrayList<>();
 
-        } else {
-            mListCart = user.getListCart();
-        }
-        Cart cart = new Cart();
-        cart.setProduct(mProduct.get());
-        cart.setChoose(false);
-        mListCart.add(cart);
-        user.setListCart(mListCart);
-        mSharedPrefManager.saveUserLogin(GsonUtils.Object2String(user));
-        Toast.makeText(mActivity, R.string.add_to_cart_success, Toast.LENGTH_SHORT).show();
+                } else {
+                    mListCart = user.getListCart();
+                }
+                Cart cart = new Cart();
+                cart.setProduct(mProduct.get());
+                cart.setChoose(false);
+                mListCart.add(cart);
+                user.setListCart(mListCart);
+                mSharedPrefManager.saveUserLogin(GsonUtils.Object2String(user));
+                Toast.makeText(mActivity, mActivity.getResources().getString(R.string.add_to_cart_success), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(mActivity, mActivity.getResources().getString(R.string.cancel_add_to_cart_success), Toast.LENGTH_SHORT).show();
+            }
+        };
+        ConfirmDialog confirmDialog = new ConfirmDialog(confirmListener, mActivity.getResources().getString(R.string.confirm), mActivity.getResources().getString(R.string.confirm_add_to_cart));
+        confirmDialog.show(mActivity.getSupportFragmentManager(), "");
     }
 
     public void onRemove() {
@@ -162,24 +203,43 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
     }
 
     public void onBuyBow() {
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        String formattedDate = sdf.format(new Date());
-        List<Order> mListOrder;
-        if (CommonActivity.isNullOrEmpty(Objects.requireNonNull(user).getListOrder())) {
-            mListOrder = new ArrayList<>();
+        BaseListener confirmListener = new BaseListener() {
+            @Override
+            public void onConfirm() {
+                @SuppressLint("SimpleDateFormat")
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                String formattedDate = sdf.format(new Date());
+                List<Order> mListOrder;
+                if (CommonActivity.isNullOrEmpty(Objects.requireNonNull(user).getListOrder())) {
+                    mListOrder = new ArrayList<>();
 
-        } else {
-            mListOrder = user.getListOrder();
-        }
-        Order order = new Order();
-        order.setProduct(mProduct.get());
-        order.setDateTime(formattedDate);
-        order.setStatus(mActivity.getResources().getString(R.string.delivering));
-        mListOrder.add(order);
-        user.setListOrder(mListOrder);
-        mSharedPrefManager.saveUserLogin(GsonUtils.Object2String(user));
-        Toast.makeText(mActivity, mActivity.getResources().getString(R.string.order_success), Toast.LENGTH_SHORT).show();
+                } else {
+                    mListOrder = user.getListOrder();
+                }
+                Order order = new Order();
+                order.setProduct(mProduct.get());
+                order.setDateTime(formattedDate);
+                order.setStatus(mActivity.getResources().getString(R.string.delivering));
+                mListOrder.add(order);
+                user.setListOrder(mListOrder);
+                mSharedPrefManager.saveUserLogin(GsonUtils.Object2String(user));
+                Toast.makeText(mActivity, mActivity.getResources().getString(R.string.order_success), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(mActivity, mActivity.getResources().getString(R.string.cancel_order_success), Toast.LENGTH_SHORT).show();
+            }
+        };
+        ConfirmDialog confirmDialog = new ConfirmDialog(confirmListener, mActivity.getResources().getString(R.string.confirm), mActivity.getResources().getString(R.string.confirm_add_to_cart));
+        confirmDialog.show(mActivity.getSupportFragmentManager(), "");
     }
 
+    private void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        view.clearFocus();
+    }
 }

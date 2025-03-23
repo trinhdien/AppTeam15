@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.utc.asm_mob_java.R;
 import com.utc.asm_mob_java.base.basefragment.BaseBindingFragment;
 import com.utc.asm_mob_java.databinding.MoreFragmentBinding;
+import com.utc.asm_mob_java.dialog.dialogconfirm.ConfirmDialog;
 
 public class MoreFragment extends BaseBindingFragment<MoreFragmentBinding, MorePresenter> implements MoreView {
     public static MoreFragment newInstance() {
@@ -14,6 +15,7 @@ public class MoreFragment extends BaseBindingFragment<MoreFragmentBinding, MoreP
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     protected int getIdLayoutRes() {
         return R.layout.more_fragment;
@@ -37,17 +39,21 @@ public class MoreFragment extends BaseBindingFragment<MoreFragmentBinding, MoreP
 
     @Override
     public void showLoading() {
-
+        showLoadingDialog();
     }
 
     @Override
     public void hideLoading() {
-
+        hideLoadingDialog();
     }
 
     @Override
     public void showErr() {
-
+        ConfirmDialog confirmDialog = new ConfirmDialog(null, mActivity.getResources()
+                .getString(R.string.error),
+                mActivity.getResources().getString(R.string.error_get_province),
+                true, "", mActivity.getResources().getString(R.string.ok));
+        confirmDialog.show(mActivity.getSupportFragmentManager(), "");
     }
 
     @Override

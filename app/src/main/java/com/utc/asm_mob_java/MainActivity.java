@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
                 view.getGlobalVisibleRect(outRect);
                 if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
                     hideKeyboard();
-                    view.clearFocus();
                 }
             }
         }
@@ -53,15 +52,16 @@ public class MainActivity extends AppCompatActivity {
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            view.clearFocus();
         }
     }
 
     private void fakeData() {
         SharedPrefManager mSharedPrefManager = new SharedPrefManager(this);
         if (!CommonActivity.isNullOrEmpty(mSharedPrefManager.getUserLogin())) {
-            gotoMainScreen(mSharedPrefManager.getUserLogin());
+            new Handler().postDelayed(() -> gotoMainScreen(mSharedPrefManager.getUserLogin()), 1000);
         } else {
-            new Handler().postDelayed(() -> Common.replaceFragment(MainActivity.this, R.id.main, LoginFragment.newInstance()), 2000);
+            new Handler().postDelayed(() -> Common.replaceFragment(MainActivity.this, R.id.main, LoginFragment.newInstance()), 1000);
         }
     }
 
