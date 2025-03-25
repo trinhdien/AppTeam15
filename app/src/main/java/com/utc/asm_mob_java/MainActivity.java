@@ -13,9 +13,8 @@ import android.widget.EditText;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.utc.asm_mob_java.screen.loginscreen.LoginFragment;
+import com.utc.asm_mob_java.screen.loginscreen.LoginActivity;
 import com.utc.asm_mob_java.screen.mainscreen.MainScreenActivity;
-import com.utc.asm_mob_java.utils.Common;
 import com.utc.asm_mob_java.utils.CommonActivity;
 import com.utc.asm_mob_java.utils.Constants;
 import com.utc.asm_mob_java.utils.SharedPrefManager;
@@ -61,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
         if (!CommonActivity.isNullOrEmpty(mSharedPrefManager.getUserLogin())) {
             new Handler().postDelayed(() -> gotoMainScreen(mSharedPrefManager.getUserLogin()), 1000);
         } else {
-            new Handler().postDelayed(() -> Common.replaceFragment(MainActivity.this, R.id.main, LoginFragment.newInstance()), 1000);
+            new Handler().postDelayed(this::gotoLogin, 1000);
+
         }
     }
 
@@ -69,6 +69,11 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.BundleKey.USER, user);
         Intent intent = new Intent(this, MainScreenActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    private void gotoLogin(){
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
     }

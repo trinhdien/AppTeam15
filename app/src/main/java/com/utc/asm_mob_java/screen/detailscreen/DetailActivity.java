@@ -12,7 +12,7 @@ import com.utc.asm_mob_java.utils.GsonUtils;
 public class DetailActivity extends BaseBindingActivity<DetailActivityBinding, DetailPresenter> implements DetailView {
 
     @Override
-    public void showMessage() {
+    public void showMessage(String mess) {
 
     }
 
@@ -27,7 +27,7 @@ public class DetailActivity extends BaseBindingActivity<DetailActivityBinding, D
     }
 
     @Override
-    public void showErr() {
+    public void showErr(String err) {
 
     }
 

@@ -32,7 +32,7 @@ public class HomeFragment extends BaseBindingFragment<HomeFragmentBinding, HomeP
     }
 
     @Override
-    public void showMessage() {
+    public void showMessage(String mess) {
 
     }
 
@@ -47,7 +47,7 @@ public class HomeFragment extends BaseBindingFragment<HomeFragmentBinding, HomeP
     }
 
     @Override
-    public void showErr() {
+    public void showErr(String err) {
 
     }
 

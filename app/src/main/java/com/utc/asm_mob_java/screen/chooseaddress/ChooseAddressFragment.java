@@ -1,18 +1,25 @@
 package com.utc.asm_mob_java.screen.chooseaddress;
 
+import android.os.Bundle;
+import android.widget.Toast;
+
 import com.utc.asm_mob_java.R;
 import com.utc.asm_mob_java.base.basefragment.BaseBindingFragment;
+import com.utc.asm_mob_java.data.model.DeliveryAddress;
 import com.utc.asm_mob_java.databinding.DialogAddressBinding;
-import com.utc.asm_mob_java.dialog.dialogconfirm.ConfirmDialog;
+import com.utc.asm_mob_java.dialog.DialogUtils;
 
 public class ChooseAddressFragment extends BaseBindingFragment<DialogAddressBinding, ChooseAddressPresenter> implements ChooseAddressView {
-    public static ChooseAddressFragment newInstance() {
-        return new ChooseAddressFragment();
+    private ChooseAddressCallBack callBack;
+    public static ChooseAddressFragment newInstance(Bundle bundle) {
+        ChooseAddressFragment fragment = new ChooseAddressFragment();
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
-    public void showMessage() {
-
+    public void showMessage(String mess) {
+        Toast.makeText(mActivity, mess, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -26,12 +33,8 @@ public class ChooseAddressFragment extends BaseBindingFragment<DialogAddressBind
     }
 
     @Override
-    public void showErr() {
-        ConfirmDialog confirmDialog = new ConfirmDialog(null, mActivity.getResources()
-                .getString(R.string.error),
-                mActivity.getResources().getString(R.string.error_get_province),
-                true, "", mActivity.getResources().getString(R.string.ok));
-        confirmDialog.show(requireActivity().getSupportFragmentManager(), "");
+    public void showErr(String err) {
+        DialogUtils.showErrDialog(mActivity, err).show(mActivity.getSupportFragmentManager(), "");
     }
 
     @Override
@@ -48,5 +51,17 @@ public class ChooseAddressFragment extends BaseBindingFragment<DialogAddressBind
     @Override
     protected void initView() {
 
+    }
+
+    @Override
+    public void onConfirmClick(DeliveryAddress address) {
+        if(callBack != null){
+            callBack.onChooseAddress(address);
+        }
+        mActivity.getOnBackPressedDispatcher().onBackPressed();
+    }
+
+    public void setCallBack(ChooseAddressCallBack callBack) {
+        this.callBack = callBack;
     }
 }

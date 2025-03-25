@@ -6,15 +6,17 @@
 
         <variable
             name="presenter"
-            type="com.utc.asm_mob_java.screen.chooseaddress.ChooseAddressPresenter" />
+            type="com.utc.asm_mob_java.screen.registerscreen.RegisterPresenter" />
     </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:fitsSystemWindows="true"
-        android:background="@color/colorPrimary"
-        android:clickable="true"
-        android:focusable="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:background="@color/colorPrimary"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:fitsSystemWindows="true"
+        android:focusable="true">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,18 +28,17 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 android:paddingHorizontal="@dimen/dp_10"
-                android:paddingVertical="@dimen/dp_5">
+                android:paddingVertical="@dimen/dp_10">
 
                 <TextView
-                    android:layout_toEndOf="@+id/img_close"
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/img_close"
-                    android:text="@string/add_delivery_address"
+                    android:layout_toEndOf="@+id/img_close"
+                    android:text="@string/signup"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dp_20"
@@ -45,10 +46,10 @@
                     tools:ignore="SpUsage" />
 
                 <ImageView
-                    android:layout_alignParentStart="true"
                     android:id="@+id/img_close"
                     android:layout_width="@dimen/dp_30"
                     android:layout_height="@dimen/dp_30"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:importantForAccessibility="no"
                     android:onClick="@{v -> presenter.onCancelClick()}"
@@ -56,7 +57,6 @@
             </RelativeLayout>
 
             <androidx.core.widget.NestedScrollView
-                android:background="@color/white"
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_20"
-                        android:text="@string/name_get_order"
+                        android:text="@string/name_of_you"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dp_16"
                         tools:ignore="SpUsage" />
@@ -87,12 +87,112 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/dp_10"
                         android:background="@drawable/bg_edt"
-                        android:hint="@string/enter_name_get_order"
+                        android:hint="@string/enter_your_name"
                         android:importantForAutofill="no"
                         android:inputType="text"
                         android:paddingHorizontal="@dimen/dp_5"
                         android:paddingVertical="@dimen/dp_10"
                         android:text="@={presenter.name}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_16" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:text="@string/birthday"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dp_16"
+                        tools:ignore="SpUsage" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/dp_10"
+                        android:background="@drawable/bg_edt"
+                        android:hint="@string/choose_birthday"
+                        android:importantForAutofill="no"
+                        android:paddingHorizontal="@dimen/dp_5"
+                        android:paddingVertical="@dimen/dp_10"
+                        android:text="@{presenter.birthday}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_16" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:text="@string/name_user_register"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dp_16"
+                        tools:ignore="SpUsage" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/dp_10"
+                        android:background="@drawable/bg_edt"
+                        android:hint="@string/user_name"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:paddingHorizontal="@dimen/dp_5"
+                        android:paddingVertical="@dimen/dp_10"
+                        android:text="@={presenter.username}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_16"
+                        tools:ignore="TextFields" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:text="@string/password_register"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dp_16"
+                        tools:ignore="SpUsage" />
+
+                    <EditText
+                        android:id="@+id/tv_pass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/dp_10"
+                        android:background="@drawable/bg_edt"
+                        android:drawableEnd="@{!presenter.isShowPass ? @drawable/ic_hide_pass : @drawable/ic_show_pass}"
+                        android:hint="@string/password"
+                        android:importantForAutofill="no"
+                        android:inputType="textPassword"
+                        android:paddingHorizontal="@dimen/dp_5"
+                        android:paddingVertical="@dimen/dp_10"
+                        android:text="@={presenter.pass}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_16" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:text="@string/enter_pass_again"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dp_16"
+                        tools:ignore="SpUsage" />
+
+                    <EditText
+                        android:id="@+id/tv_pass_again"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/dp_10"
+                        android:background="@drawable/bg_edt"
+                        android:drawableEnd="@{!presenter.isShowPassAgain ? @drawable/ic_hide_pass : @drawable/ic_show_pass}"
+                        android:hint="@string/enter_pass_again"
+                        android:importantForAutofill="no"
+                        android:inputType="textPassword"
+                        android:paddingHorizontal="@dimen/dp_5"
+                        android:paddingVertical="@dimen/dp_10"
+                        android:text="@={presenter.passAgain}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_16" />
 
@@ -107,7 +207,6 @@
                         tools:ignore="SpUsage" />
 
                     <EditText
-                        android:id="@+id/edt_number_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/dp_10"
@@ -117,7 +216,7 @@
                         android:inputType="number"
                         android:paddingHorizontal="@dimen/dp_5"
                         android:paddingVertical="@dimen/dp_10"
-                        android:text="@={presenter.numberPhone}"
+                        android:text="@={presenter.phone}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_16"
                         tools:ignore="TextFields" />
@@ -127,72 +226,25 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_20"
-                        android:text="@string/choose_province"
+                        android:text="@string/email"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dp_16"
                         tools:ignore="SpUsage" />
 
-                    <TextView
+                    <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/dp_10"
                         android:background="@drawable/bg_edt"
-                        android:hint="@string/choose_province"
+                        android:hint="@string/enter_email"
                         android:importantForAutofill="no"
-                        android:onClick="@{v -> presenter.onClickProvince()}"
+                        android:inputType="number"
                         android:paddingHorizontal="@dimen/dp_5"
                         android:paddingVertical="@dimen/dp_10"
-                        android:text="@{presenter.currentProvince.name}"
+                        android:text="@={presenter.email}"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_16" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/dp_10"
-                        android:layout_marginTop="@dimen/dp_20"
-                        android:text="@string/choose_district"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dp_16"
-                        tools:ignore="SpUsage" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/dp_10"
-                        android:background="@drawable/bg_edt"
-                        android:hint="@string/choose_district"
-                        android:importantForAutofill="no"
-                        android:onClick="@{v -> presenter.onClickDistrict()}"
-                        android:paddingHorizontal="@dimen/dp_5"
-                        android:paddingVertical="@dimen/dp_10"
-                        android:text="@{presenter.currentDistrict.name}"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_16" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/dp_10"
-                        android:layout_marginTop="@dimen/dp_20"
-                        android:text="@string/choose_ward"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dp_16"
-                        tools:ignore="SpUsage" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/dp_10"
-                        android:background="@drawable/bg_edt"
-                        android:hint="@string/choose_ward"
-                        android:importantForAutofill="no"
-                        android:onClick="@{v -> presenter.onClickWard()}"
-                        android:paddingHorizontal="@dimen/dp_5"
-                        android:paddingVertical="@dimen/dp_10"
-                        android:text="@{presenter.currentWard.name}"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/sp_16"
+                        tools:ignore="TextFields" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -209,10 +261,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/dp_10"
                         android:background="@drawable/bg_edt"
+                        android:hint="@string/choose_address"
                         android:importantForAutofill="no"
+                        android:onClick="@{v -> presenter.onClickAddress()}"
                         android:paddingHorizontal="@dimen/dp_5"
                         android:paddingVertical="@dimen/dp_10"
-                        android:text="@{presenter.address}"
+                        android:text="@{presenter.deliveryAddressCurrent.address}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_16" />
 
@@ -226,18 +280,16 @@
                         android:textSize="@dimen/dp_16"
                         tools:ignore="SpUsage" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/edt_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/dp_10"
                         android:background="@drawable/bg_edt"
-                        android:hint="@string/enter_address_detail"
                         android:importantForAutofill="no"
-                        android:inputType="text"
                         android:paddingHorizontal="@dimen/dp_5"
                         android:paddingVertical="@dimen/dp_10"
-                        android:text="@={presenter.addressDetail}"
+                        android:text="@={presenter.deliveryAddressCurrent.addressDetail}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_16" />
                 </LinearLayout>
@@ -250,6 +302,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/dp_10"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/dp_10"

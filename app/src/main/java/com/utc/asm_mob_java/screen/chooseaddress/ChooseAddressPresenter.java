@@ -15,6 +15,7 @@ import com.utc.asm_mob_java.data.source.repository.AddressRepository;
 import com.utc.asm_mob_java.data.source.response.GetAddressResponse;
 import com.utc.asm_mob_java.dialog.dialogfilter.DialogFilter;
 import com.utc.asm_mob_java.dialog.dialogfilter.DialogFilterListener;
+import com.utc.asm_mob_java.utils.CommonActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +88,7 @@ public class ChooseAddressPresenter extends BasePresenterForm<ChooseAddressView>
 
                     @Override
                     public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                        mView.showErr();
+                        mView.showErr(mActivity.getResources().getString(R.string.error_get_province));
                     }
 
                     @Override
@@ -127,6 +128,7 @@ public class ChooseAddressPresenter extends BasePresenterForm<ChooseAddressView>
         currentProvince.set(item);
         currentWard.set(null);
         currentDistrict.set(null);
+        address.set("");
         if (currentProvince.get() != null) {
             mListDistrict.clear();
             for (District district : mListDistrictTemp) {
@@ -140,6 +142,7 @@ public class ChooseAddressPresenter extends BasePresenterForm<ChooseAddressView>
     private void onChooseDistrict(District item) {
         currentDistrict.set(item);
         currentWard.set(null);
+        address.set("");
         if (currentDistrict.get() != null) {
             mListWard.clear();
             for (Ward ward : mListWardTemp) {
@@ -152,6 +155,7 @@ public class ChooseAddressPresenter extends BasePresenterForm<ChooseAddressView>
 
     private void onChooseWard(Ward item) {
         currentWard.set(item);
+        address.set(Objects.requireNonNull(currentProvince.get()).getName() + ", " + Objects.requireNonNull(currentDistrict.get()).getName() + ", " + Objects.requireNonNull(currentWard.get()).getName());
     }
 
     public void onCancelClick() {
@@ -159,6 +163,41 @@ public class ChooseAddressPresenter extends BasePresenterForm<ChooseAddressView>
     }
 
     public void onConfirmClick() {
+        if (validateConfirm()) {
+            deliveryAddress.setProvince(currentProvince.get());
+            deliveryAddress.setDistrict(currentDistrict.get());
+            deliveryAddress.setWard(currentWard.get());
+            deliveryAddress.setAddressDetail(addressDetail.get());
+            deliveryAddress.setAddress(address.get());
+            deliveryAddress.setPhoneNumber(numberPhone.get());
+            deliveryAddress.setName(name.get());
+            deliveryAddress.setDefault(false);
+            mView.onConfirmClick(deliveryAddress);
+        }
+    }
 
+    private boolean validateConfirm() {
+        if (CommonActivity.isNullOrEmpty(name.get())) {
+            mView.showMessage(String.format(mActivity.getResources().getString(R.string.please_enter), mActivity.getResources().getString(R.string.name_get_person_order)));
+            return false;
+        }
+        if (CommonActivity.isNullOrEmpty(numberPhone.get())) {
+            mView.showMessage(String.format(mActivity.getResources().getString(R.string.please_enter), mActivity.getResources().getString(R.string.number_phone)));
+            return false;
+        }
+        if (currentProvince.get() == null) {
+            mView.showMessage(String.format(mActivity.getResources().getString(R.string.please), mActivity.getResources().getString(R.string.choose_province)));
+            return false;
+        }
+        if (currentDistrict.get() == null) {
+            mView.showMessage(String.format(mActivity.getResources().getString(R.string.please), mActivity.getResources().getString(R.string.choose_district)));
+            return false;
+        }
+        if (currentWard.get() == null) {
+            mView.showMessage(String.format(mActivity.getResources().getString(R.string.please), mActivity.getResources().getString(R.string.choose_ward)));
+            return false;
+
+        }
+        return true;
     }
 }

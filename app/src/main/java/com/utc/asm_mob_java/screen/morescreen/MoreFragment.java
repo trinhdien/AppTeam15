@@ -23,7 +23,9 @@ public class MoreFragment extends BaseBindingFragment<MoreFragmentBinding, MoreP
 
     @Override
     protected void initData() {
-        mPresenter = new MorePresenter(mActivity, this);
+        if(mPresenter == null){
+            mPresenter = new MorePresenter(mActivity, this);
+        }
         mBinding.setPresenter(mPresenter);
     }
 
@@ -33,7 +35,7 @@ public class MoreFragment extends BaseBindingFragment<MoreFragmentBinding, MoreP
     }
 
     @Override
-    public void showMessage() {
+    public void showMessage(String mess) {
 
     }
 
@@ -48,7 +50,7 @@ public class MoreFragment extends BaseBindingFragment<MoreFragmentBinding, MoreP
     }
 
     @Override
-    public void showErr() {
+    public void showErr(String err) {
         ConfirmDialog confirmDialog = new ConfirmDialog(null, mActivity.getResources()
                 .getString(R.string.error),
                 mActivity.getResources().getString(R.string.error_get_province),

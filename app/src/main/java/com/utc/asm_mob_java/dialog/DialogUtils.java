@@ -1,24 +1,18 @@
 package com.utc.asm_mob_java.dialog;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.view.LayoutInflater;
-
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 
 import com.utc.asm_mob_java.R;
+import com.utc.asm_mob_java.dialog.dialogconfirm.ConfirmDialog;
 
 public class DialogUtils {
-    private void showConfirmDialog(Context context, DialogInterface.OnClickListener yesListener, DialogInterface.OnClickListener cancelListener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-        ViewDataBinding binding = DataBindingUtil.inflate(inflater, R.layout.dialog_confirm, null, false);
-        builder.setView(binding.getRoot());
-        AlertDialog dialog = builder.create();
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
+    public static ConfirmDialog showErrDialog(Context context, String err) {
+        return new ConfirmDialog(null, context.getResources()
+                .getString(R.string.error), err,
+                true, "", context.getResources().getString(R.string.ok));
+    }
+
+    public static ConfirmDialog showConfirmDialog(BaseListener confirmListener, Context context, String title, String mess) {
+        return new ConfirmDialog(confirmListener, title == null ? context.getResources().getString(R.string.confirm) : title, mess);
     }
 }

@@ -2,25 +2,17 @@ package com.utc.asm_mob_java.screen.loginscreen;
 
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.MotionEvent;
 
 import com.utc.asm_mob_java.R;
-import com.utc.asm_mob_java.base.basefragment.BaseBindingFragment;
-import com.utc.asm_mob_java.databinding.LoginFragmentBinding;
+import com.utc.asm_mob_java.base.baseactivity.BaseBindingActivity;
+import com.utc.asm_mob_java.databinding.LoginActivityBinding;
 
-public class LoginFragment extends BaseBindingFragment<LoginFragmentBinding, LoginPresenter> implements LoginView {
-    public static LoginFragment newInstance() {
-        Bundle args = new Bundle();
-        LoginFragment fragment = new LoginFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+public class LoginActivity extends BaseBindingActivity<LoginActivityBinding, LoginPresenter> implements LoginView {
     @Override
-    public void showMessage() {
+    public void showMessage(String mess) {
 
     }
 
@@ -33,19 +25,19 @@ public class LoginFragment extends BaseBindingFragment<LoginFragmentBinding, Log
     }
 
     @Override
-    public void showErr() {
+    public void showErr(String err) {
 
     }
 
     @Override
-    protected int getIdLayoutRes() {
-        return R.layout.login_fragment;
+    protected int getIdLayout() {
+        return R.layout.login_activity;
     }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void initData() {
-        mPresenter = new LoginPresenter(mActivity, this);
+        mPresenter = new LoginPresenter(LoginActivity.this, this);
         mBinding.setPresenter(mPresenter);
         mBinding.tvPass.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -58,11 +50,6 @@ public class LoginFragment extends BaseBindingFragment<LoginFragmentBinding, Log
             }
             return false;
         });
-
-    }
-
-    @Override
-    protected void initView() {
 
     }
 }

@@ -3,17 +3,17 @@ package com.utc.asm_mob_java.screen.loginscreen;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
-import com.google.gson.reflect.TypeToken;
+import com.utc.asm_mob_java.R;
 import com.utc.asm_mob_java.base.baseactivity.BasePresenterForm;
-import com.utc.asm_mob_java.data.model.DeliveryAddress;
 import com.utc.asm_mob_java.data.model.User;
 import com.utc.asm_mob_java.screen.mainscreen.MainScreenActivity;
+import com.utc.asm_mob_java.screen.registerscreen.RegisterFragment;
+import com.utc.asm_mob_java.utils.Common;
 import com.utc.asm_mob_java.utils.CommonActivity;
 import com.utc.asm_mob_java.utils.Constants;
 import com.utc.asm_mob_java.utils.GsonUtils;
@@ -45,30 +45,27 @@ public class LoginPresenter extends BasePresenterForm<LoginView> {
     }
 
     public void onLogin() {
-        if (CommonActivity.isNullOrEmpty(username.get()) || CommonActivity.isNullOrEmpty(password.get())) {
-            Toast.makeText(mActivity, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+        if (CommonActivity.isNullOrEmpty(username.get())) {
+            Toast.makeText(mActivity, mActivity.getResources().getString(R.string.please_enter_username), Toast.LENGTH_SHORT).show();
             return;
         }
-        for (User user : mListUser) {
-            if (Objects.requireNonNull(username.get()).equalsIgnoreCase(user.getUsername()) && Objects.requireNonNull(password.get()).equalsIgnoreCase(user.getPassword())) {
-                String userString = GsonUtils.Object2String(user);
-                mSharedPrefManager.saveUserLogin(GsonUtils.Object2String(user));
-                gotoMainScreen(userString);
-            }
+        if (CommonActivity.isNullOrEmpty(username.get())) {
+            Toast.makeText(mActivity, mActivity.getResources().getString(R.string.please_enter_pass), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (checkLogin() != null) {
+            String userString = GsonUtils.Object2String(checkLogin());
+            mSharedPrefManager.saveUserLogin(GsonUtils.Object2String(checkLogin()));
+            gotoMainScreen(userString);
+        } else {
+            Toast.makeText(mActivity, mActivity.getResources().getString(R.string.dont_match_pass_or_username), Toast.LENGTH_SHORT).show();
         }
     }
 
     private void fakeData() {
         if (!CommonActivity.isNullOrEmpty(mSharedPrefManager.getListUser())) {
             mListUser = GsonUtils.String2ListObject(mSharedPrefManager.getListUser(), User[].class);
-        } else {
-            List<DeliveryAddress> address = new ArrayList<>();
-            address.add(new DeliveryAddress("Đắc Trí, Định Bình, Yên Định Thanh Hoá", true));
-            mListUser.add(new User("Buddy", "buddy@gnail.com", "0987654321", "03/09/2003", address, "buddy", "buddy1", Constants.IMAGE_DEFAULT));
-            mSharedPrefManager.saveListUser(GsonUtils.Object2String(mListUser));
         }
-
-
     }
 
     private void gotoMainScreen(String user) {
@@ -77,5 +74,22 @@ public class LoginPresenter extends BasePresenterForm<LoginView> {
         Intent intent = new Intent(mActivity, MainScreenActivity.class);
         mActivity.startActivity(intent);
         mActivity.finish();
+    }
+
+    private User checkLogin() {
+        for (User user : mListUser) {
+            if (Objects.requireNonNull(username.get()).equalsIgnoreCase(user.getUsername()) && Objects.requireNonNull(password.get()).equalsIgnoreCase(user.getPassword())) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public void onClickRegister() {
+        Common.replaceFragment(mActivity, R.id.main, RegisterFragment.newInstance());
+    }
+
+    public void onClickForgotPass() {
+
     }
 }

@@ -101,7 +101,7 @@ public class BaseRecyclerView<T> extends RecyclerView.Adapter<BaseRecyclerView<?
     @Override
     public int getItemCount() {
         if (CommonActivity.isNullOrEmpty(mList)) {
-            return 1;
+            return 0;
         }
         return mList.size();
     }

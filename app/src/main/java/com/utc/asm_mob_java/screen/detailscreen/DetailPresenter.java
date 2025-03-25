@@ -27,7 +27,7 @@ import com.utc.asm_mob_java.data.model.Product;
 import com.utc.asm_mob_java.data.model.User;
 import com.utc.asm_mob_java.databinding.LayoutBottomSheetBuyBinding;
 import com.utc.asm_mob_java.dialog.BaseListener;
-import com.utc.asm_mob_java.dialog.dialogconfirm.ConfirmDialog;
+import com.utc.asm_mob_java.dialog.DialogUtils;
 import com.utc.asm_mob_java.utils.CommonActivity;
 import com.utc.asm_mob_java.utils.GsonUtils;
 import com.utc.asm_mob_java.utils.SharedPrefManager;
@@ -183,8 +183,7 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
                 Toast.makeText(mActivity, mActivity.getResources().getString(R.string.cancel_add_to_cart_success), Toast.LENGTH_SHORT).show();
             }
         };
-        ConfirmDialog confirmDialog = new ConfirmDialog(confirmListener, mActivity.getResources().getString(R.string.confirm), mActivity.getResources().getString(R.string.confirm_add_to_cart));
-        confirmDialog.show(mActivity.getSupportFragmentManager(), "");
+        DialogUtils.showConfirmDialog(confirmListener, mActivity, null,mActivity.getResources().getString(R.string.confirm_add_to_cart)).show(mActivity.getSupportFragmentManager(), "");
     }
 
     public void onRemove() {
@@ -231,8 +230,7 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
                 Toast.makeText(mActivity, mActivity.getResources().getString(R.string.cancel_order_success), Toast.LENGTH_SHORT).show();
             }
         };
-        ConfirmDialog confirmDialog = new ConfirmDialog(confirmListener, mActivity.getResources().getString(R.string.confirm), mActivity.getResources().getString(R.string.confirm_add_to_cart));
-        confirmDialog.show(mActivity.getSupportFragmentManager(), "");
+        DialogUtils.showConfirmDialog(confirmListener, mActivity, null,mActivity.getResources().getString(R.string.confirm_add_to_cart));
     }
 
     private void hideKeyboard(View view) {

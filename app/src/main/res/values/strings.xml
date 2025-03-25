@@ -66,5 +66,24 @@
     <string name="please_choose_province">Vui lòng chọn Tỉnh</string>
     <string name="please_choose_district">Vui lòng chọn Quận/Huyện</string>
     <string name="no_data_2">OOPS! không có dữ liệu</string>
+    <string name="please_enter">Vui lòng nhập %s</string>
+    <string name="name_get_person_order">Tên người nhận hàng</string>
+    <string name="please">Vui lòng %s</string>
+    <string name="add_address_success">Đã thêm địa chỉ thành công</string>
+    <string name="please_enter_username">Vui lòng nhập username</string>
+    <string name="please_enter_pass">Vui lòng nhập password</string>
+    <string name="dont_match_pass_or_username">Vui lòng kiểm tra lại tài khoản và mật khẩu</string>
+    <string name="name_of_you">Tên của bạn</string>
+    <string name="enter_your_name">Nhập tên của bạn</string>
+    <string name="name_user_register">Tên tài khoản</string>
+    <string name="password_register">Mật khẩu</string>
+    <string name="enter_pass_again">Nhập lại mật khẩu</string>
+    <string name="enter_email">Nhập email</string>
+    <string name="choose_birthday">Chọn ngày sinh</string>
+    <string name="register_success">Đã đăng ký thành công</string>
+    <string name="please_enter_name">vui lòng nhập tên</string>
+    <string name="please_enter_email">Vui lòng nhập email</string>
+    <string name="plesase_enter_number_phone">Vui lòng nhập số điện thoại</string>
+    <string name="please_choose_address">Vui lòng chọn địa chỉ</string>
 
 </resources>

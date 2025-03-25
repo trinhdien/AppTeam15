@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import androidx.databinding.ObservableField;
 
@@ -20,6 +21,7 @@ import com.utc.asm_mob_java.data.model.DeliveryAddress;
 import com.utc.asm_mob_java.data.model.User;
 import com.utc.asm_mob_java.dialog.dialogeditprofile.DialogEditProfile;
 import com.utc.asm_mob_java.dialog.dialogeditprofile.EditProfileListener;
+import com.utc.asm_mob_java.screen.chooseaddress.ChooseAddressCallBack;
 import com.utc.asm_mob_java.screen.chooseaddress.ChooseAddressFragment;
 import com.utc.asm_mob_java.utils.Common;
 import com.utc.asm_mob_java.utils.GsonUtils;
@@ -35,6 +37,7 @@ public class MorePresenter extends BasePresenterForm<MoreView> {
     public ObservableField<BaseRecyclerView<DeliveryAddress>> mAdapterAddress;
     private List<DeliveryAddress> mListAddress;
     private SharedPrefManager mSharedPrefManager;
+    private ChooseAddressCallBack callBack;
 
     public MorePresenter(Context mContext, MoreView mView) {
         super(mContext, mView);
@@ -67,6 +70,13 @@ public class MorePresenter extends BasePresenterForm<MoreView> {
                 Objects.requireNonNull(mAdapterAddress.get()).notifyDataSetChanged();
             }
         });
+        callBack = deliveryAddress -> {
+            mListAddress.add(deliveryAddress);
+            Objects.requireNonNull(mUser.get()).setAddress(mListAddress);
+            mSharedPrefManager.saveUserLogin(GsonUtils.Object2String(mUser.get()));
+            Toast.makeText(mActivity, mActivity.getResources().getString(R.string.add_address_success), Toast.LENGTH_SHORT).show();
+            Objects.requireNonNull(mAdapterAddress.get()).notifyDataSetChanged();
+        };
     }
 
     public void showCustomMenu(View anchorView) {
@@ -130,6 +140,8 @@ public class MorePresenter extends BasePresenterForm<MoreView> {
     }
 
     public void onClickAddress() {
-        Common.replaceFragment(mActivity,R.id.frame_main, ChooseAddressFragment.newInstance());
+        ChooseAddressFragment fragment = ChooseAddressFragment.newInstance(null);
+        fragment.setCallBack(callBack);
+        Common.replaceFragment(mActivity, R.id.main,fragment);
     }
 }

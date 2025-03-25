@@ -11,7 +11,7 @@
     </data>
 
     <FrameLayout
-        android:id="@+id/frame_main"
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <RelativeLayout
@@ -23,7 +23,7 @@
             tools:ignore="UselessParent">
 
             <FrameLayout
-                android:id="@+id/container"
+                android:id="@+id/main_page"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/bottom_navigation"

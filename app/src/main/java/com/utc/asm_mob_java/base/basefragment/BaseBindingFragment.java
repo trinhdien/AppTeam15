@@ -2,10 +2,12 @@ package com.utc.asm_mob_java.base.basefragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,7 +34,7 @@ public abstract class BaseBindingFragment<T extends ViewDataBinding, K> extends 
                 false);
         initView();
 
-
+        EdgeToEdge.enable(mActivity);
         return mBinding.getRoot();
     }
 
@@ -57,6 +59,7 @@ public abstract class BaseBindingFragment<T extends ViewDataBinding, K> extends 
 
     @Override
     public void onDestroy() {
+        Log.d("zzzzz", "onDestroy: ");
         super.onDestroy();
         if (mPresenter != null && mPresenter instanceof BasePresenterForm) {
             ((BasePresenterForm<?>) mPresenter).unSubscription();

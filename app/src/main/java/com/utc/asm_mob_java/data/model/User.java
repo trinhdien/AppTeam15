@@ -92,6 +92,9 @@ public class User {
         this.avt = avt;
     }
 
+    public User() {
+    }
+
     public User(String name, String email, String phone, String dateOfBirth, List<DeliveryAddress> address, String username, String password, String avt) {
         this.name = name;
         this.email = email;

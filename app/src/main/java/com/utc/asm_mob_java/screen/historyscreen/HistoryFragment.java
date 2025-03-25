@@ -30,7 +30,7 @@ public class HistoryFragment extends BaseBindingFragment<HistoryFragmentBinding,
     }
 
     @Override
-    public void showMessage() {
+    public void showMessage(String mess) {
 
     }
 
@@ -45,7 +45,7 @@ public class HistoryFragment extends BaseBindingFragment<HistoryFragmentBinding,
     }
 
     @Override
-    public void showErr() {
+    public void showErr(String err) {
 
     }
 }

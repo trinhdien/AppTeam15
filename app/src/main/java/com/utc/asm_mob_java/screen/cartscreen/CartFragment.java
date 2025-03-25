@@ -30,7 +30,7 @@ public class CartFragment extends BaseBindingFragment<CartFragmentBinding, CartP
     }
 
     @Override
-    public void showMessage() {
+    public void showMessage(String mess) {
 
     }
 
@@ -45,7 +45,7 @@ public class CartFragment extends BaseBindingFragment<CartFragmentBinding, CartP
     }
 
     @Override
-    public void showErr() {
+    public void showErr(String err) {
 
     }
 }
