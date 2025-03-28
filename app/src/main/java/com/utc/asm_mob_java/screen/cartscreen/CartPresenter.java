@@ -5,9 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-import android.widget.EditText;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
@@ -15,7 +12,6 @@ import androidx.databinding.ObservableField;
 import com.utc.asm_mob_java.R;
 import com.utc.asm_mob_java.base.BaseRecyclerView;
 import com.utc.asm_mob_java.base.baseactivity.BasePresenterForm;
-import com.utc.asm_mob_java.callback.OnListenerItemRecyclerView;
 import com.utc.asm_mob_java.callback.OnListenerRecyclerView;
 import com.utc.asm_mob_java.data.model.Cart;
 import com.utc.asm_mob_java.data.model.Product;

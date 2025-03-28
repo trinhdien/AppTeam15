@@ -12,6 +12,7 @@ import com.utc.asm_mob_java.R;
 import com.utc.asm_mob_java.base.baseactivity.BasePresenterForm;
 import com.utc.asm_mob_java.data.model.User;
 import com.utc.asm_mob_java.screen.mainscreen.MainScreenActivity;
+import com.utc.asm_mob_java.screen.registerscreen.RegisterCallBack;
 import com.utc.asm_mob_java.screen.registerscreen.RegisterFragment;
 import com.utc.asm_mob_java.utils.Common;
 import com.utc.asm_mob_java.utils.CommonActivity;
@@ -86,7 +87,11 @@ public class LoginPresenter extends BasePresenterForm<LoginView> {
     }
 
     public void onClickRegister() {
-        Common.replaceFragment(mActivity, R.id.main, RegisterFragment.newInstance());
+        mView.showLoading();
+        RegisterCallBack callBack = this::fakeData;
+        RegisterFragment fragment = RegisterFragment.newInstance();
+        fragment.setCallBack(callBack);
+        Common.replaceFragment(mActivity, R.id.main, fragment);
     }
 
     public void onClickForgotPass() {

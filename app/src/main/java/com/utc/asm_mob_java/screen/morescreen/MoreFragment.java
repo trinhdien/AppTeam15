@@ -23,7 +23,7 @@ public class MoreFragment extends BaseBindingFragment<MoreFragmentBinding, MoreP
 
     @Override
     protected void initData() {
-        if(mPresenter == null){
+        if (mPresenter == null) {
             mPresenter = new MorePresenter(mActivity, this);
         }
         mBinding.setPresenter(mPresenter);

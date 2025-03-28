@@ -42,6 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         if (mLoadingDialog == null) {
                             mLoadingDialog = new LoadingDialog(BaseActivity.this);
                         }
+                        mLoadingDialog.setCancelable(cancelable);
                         mLoadingDialog.show();
 
                     } catch (Exception e) {
@@ -71,6 +72,36 @@ public abstract class BaseActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         Logger.log(this.getClass(), e);
                     }
+
+                }
+            });
+        } catch (Exception e) {
+            Logger.log(this.getClass(), e);
+        }
+
+
+    }
+    public void showLoadingDialog() {
+        try {
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+                            mLoadingDialog.dismiss();
+                            mLoadingDialog = null;
+                        }
+
+                        if (mLoadingDialog == null) {
+                            mLoadingDialog = new LoadingDialog(BaseActivity.this);
+                        }
+                        mLoadingDialog.setCancelable(false);
+                        mLoadingDialog.show();
+
+                    } catch (Exception e) {
+                        Logger.log(this.getClass(), e);
+                    }
+
 
                 }
             });

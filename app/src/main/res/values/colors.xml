@@ -13,5 +13,7 @@
     <color name="orange">#DE591C</color>
     <color name="green">#73D06F</color>
     <color name="brown">#BCB19F</color>
+    <color name="grey_bright">#757575</color>
+    <color name="grey_five">#ededed</color>
 
 </resources>

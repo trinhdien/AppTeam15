@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.utc.asm_mob_java"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.utc.asm_mob_java"
@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.recyclerview.swipedecorator)
     implementation(libs.glideslider)
     implementation(libs.appcompat)
     implementation(libs.material)

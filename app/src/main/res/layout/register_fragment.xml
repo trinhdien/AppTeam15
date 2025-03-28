@@ -107,6 +107,7 @@
                         tools:ignore="SpUsage" />
 
                     <TextView
+                        android:onClick="@{v->presenter.onChooseDate()}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/dp_10"
@@ -136,7 +137,7 @@
                         android:background="@drawable/bg_edt"
                         android:hint="@string/user_name"
                         android:importantForAutofill="no"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:paddingHorizontal="@dimen/dp_5"
                         android:paddingVertical="@dimen/dp_10"
                         android:text="@={presenter.username}"
@@ -238,7 +239,7 @@
                         android:background="@drawable/bg_edt"
                         android:hint="@string/enter_email"
                         android:importantForAutofill="no"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:paddingHorizontal="@dimen/dp_5"
                         android:paddingVertical="@dimen/dp_10"
                         android:text="@={presenter.email}"

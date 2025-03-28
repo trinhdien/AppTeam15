@@ -10,6 +10,7 @@ import com.utc.asm_mob_java.data.model.Cart;
 import com.utc.asm_mob_java.data.model.DeliveryAddress;
 import com.utc.asm_mob_java.data.model.Order;
 import com.utc.asm_mob_java.data.model.User;
+import com.utc.asm_mob_java.dialog.DialogUtils;
 import com.utc.asm_mob_java.screen.chooseaddress.ChooseAddressCallBack;
 import com.utc.asm_mob_java.screen.chooseaddress.ChooseAddressFragment;
 import com.utc.asm_mob_java.utils.Common;
@@ -28,7 +29,6 @@ public class RegisterPresenter extends BasePresenterForm<RegisterView> {
     public ObservableField<String> email;
     public ObservableField<String> pass;
     public ObservableField<String> phone;
-    public ObservableField<String> address;
     public ObservableField<Boolean> isShowPass;
     public ObservableField<Boolean> isShowPassAgain;
     public ObservableField<String> passAgain;
@@ -51,17 +51,19 @@ public class RegisterPresenter extends BasePresenterForm<RegisterView> {
         email = new ObservableField<>();
         pass = new ObservableField<>();
         phone = new ObservableField<>();
-        address = new ObservableField<>();
         isShowPass = new ObservableField<>(false);
         isShowPassAgain = new ObservableField<>(false);
         birthday = new ObservableField<>();
         passAgain = new ObservableField<>();
         addressDetail = new ObservableField<>();
-        mListUser = new ArrayList<>();
         user = new User();
         deliveryAddressCurrent = new ObservableField<>();
         mSharedPrefManager = new SharedPrefManager(mActivity);
-        mListUser = GsonUtils.String2ListObject(mSharedPrefManager.getListUser(), User[].class);
+        if (GsonUtils.String2ListObject(mSharedPrefManager.getListUser(), User[].class) == null) {
+            mListUser = new ArrayList<>();
+        } else {
+            mListUser = new ArrayList<>(Objects.requireNonNull(GsonUtils.String2ListObject(mSharedPrefManager.getListUser(), User[].class)));
+        }
         callBack = deliveryAddress -> deliveryAddressCurrent.set(deliveryAddress);
     }
 
@@ -71,6 +73,9 @@ public class RegisterPresenter extends BasePresenterForm<RegisterView> {
 
     public void onConfirmClick() {
         if (validate()) {
+            if (mListUser == null) {
+                mListUser = new ArrayList<>();
+            }
             List<DeliveryAddress> listAddress = new ArrayList<>();
             List<Cart> listCart = new ArrayList<>();
             List<Order> listOrder = new ArrayList<>();
@@ -82,13 +87,14 @@ public class RegisterPresenter extends BasePresenterForm<RegisterView> {
             user.setPhone(phone.get());
             user.setListCart(listCart);
             user.setListOrder(listOrder);
+            Objects.requireNonNull(deliveryAddressCurrent.get()).setDefault(true);
             listAddress.add(deliveryAddressCurrent.get());
             user.setAddress(listAddress);
             user.setDateOfBirth(birthday.get());
             mListUser.add(user);
             mSharedPrefManager.saveListUser(GsonUtils.Object2String(mListUser));
             mView.showMessage(mActivity.getResources().getString(R.string.register_success));
-            onCancelClick();
+            mView.onRegisterSuccess();
         }
     }
 
@@ -110,12 +116,15 @@ public class RegisterPresenter extends BasePresenterForm<RegisterView> {
         }
         if (!Objects.equals(pass.get(), passAgain.get())) {
             mView.showMessage(mActivity.getResources().getString(R.string.dont_match_pass_or_username));
+            return false;
         }
         if (CommonActivity.isNullOrEmpty(phone.get())) {
             mView.showMessage(mActivity.getResources().getString(R.string.plesase_enter_number_phone));
+            return false;
         }
-        if (CommonActivity.isNullOrEmpty(address.get())) {
+        if (CommonActivity.isNullOrEmpty(deliveryAddressCurrent.get())) {
             mView.showMessage(mActivity.getResources().getString(R.string.please_choose_address));
+            return false;
         }
         return true;
     }
@@ -124,5 +133,9 @@ public class RegisterPresenter extends BasePresenterForm<RegisterView> {
         ChooseAddressFragment fragment = ChooseAddressFragment.newInstance(null);
         fragment.setCallBack(callBack);
         Common.replaceFragment(mActivity, R.id.main, fragment);
+    }
+
+    public void onChooseDate() {
+        DialogUtils.showDatePickerDialog(mActivity, date -> birthday.set(date));
     }
 }

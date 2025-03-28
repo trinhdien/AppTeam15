@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 public class MorePresenter extends BasePresenterForm<MoreView> {
     public ObservableField<User> mUser;
     public ObservableField<BaseRecyclerView<DeliveryAddress>> mAdapterAddress;
@@ -142,6 +143,6 @@ public class MorePresenter extends BasePresenterForm<MoreView> {
     public void onClickAddress() {
         ChooseAddressFragment fragment = ChooseAddressFragment.newInstance(null);
         fragment.setCallBack(callBack);
-        Common.replaceFragment(mActivity, R.id.main,fragment);
+        Common.replaceFragment(mActivity, R.id.main, fragment);
     }
 }

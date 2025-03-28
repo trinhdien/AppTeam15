@@ -18,10 +18,12 @@ public class LoginActivity extends BaseBindingActivity<LoginActivityBinding, Log
 
     @Override
     public void showLoading() {
+        showLoadingDialog();
     }
 
     @Override
     public void hideLoading() {
+        hideLoadingDialog();
     }
 
     @Override

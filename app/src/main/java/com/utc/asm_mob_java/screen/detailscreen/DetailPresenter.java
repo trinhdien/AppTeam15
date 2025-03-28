@@ -72,10 +72,6 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
             DefaultSliderView sliderView = new DefaultSliderView(mActivity);
             sliderView.image(image);
             sliderView.setProgressBarVisible(true);
-            sliderView.setOnSliderClickListener(slider -> {
-
-            });
-
             sliderView.setRequestOption(new RequestOptions().centerCrop());
             sliderLayout.stopAutoCycle();
             sliderLayout.addSlider(sliderView);

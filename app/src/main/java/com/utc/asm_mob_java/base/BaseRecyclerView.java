@@ -135,7 +135,7 @@ public class BaseRecyclerView<T> extends RecyclerView.Adapter<BaseRecyclerView<?
                     @Override
                     public void afterTextChanged(Editable editable) {
                         if (listenerRecyclerView != null)
-                            listenerRecyclerView.afterTextChanged(mItem, getAdapterPosition(), editable);
+                            listenerRecyclerView.afterTextChanged(mItem, getBindingAdapterPosition(), editable);
                     }
                 });
             }
@@ -144,27 +144,27 @@ public class BaseRecyclerView<T> extends RecyclerView.Adapter<BaseRecyclerView<?
         public void onClickItem() {
             if (CommonActivity.isNullOrEmpty(mList)) return;
             if (listener != null)
-                listener.onClickItem(mList.get(getAdapterPosition()), getAdapterPosition());
+                listener.onClickItem(mList.get(getBindingAdapterPosition()), getBindingAdapterPosition());
             if (listenerRecyclerView != null)
-                listenerRecyclerView.onClickItem(mList.get(getAdapterPosition()), getAdapterPosition());
+                listenerRecyclerView.onClickItem(mList.get(getBindingAdapterPosition()), getBindingAdapterPosition());
         }
 
         public void onClickItem1() {
             if (CommonActivity.isNullOrEmpty(mList)) return;
             if (listenerRecyclerView != null)
-                listenerRecyclerView.onClickItem1(mList.get(getAdapterPosition()), getAdapterPosition());
+                listenerRecyclerView.onClickItem1(mList.get(getBindingAdapterPosition()), getBindingAdapterPosition());
         }
 
         public void onClickItem2() {
             if (CommonActivity.isNullOrEmpty(mList)) return;
             if (listenerRecyclerView != null)
-                listenerRecyclerView.onClickItem2(mItem, getAdapterPosition());
+                listenerRecyclerView.onClickItem2(mItem, getBindingAdapterPosition());
         }
 
         public void onClickButton() {
             if (listenerRecyclerView != null)
-                if (getAdapterPosition() != RecyclerView.NO_POSITION && getAdapterPosition() < mList.size()) {
-                    listenerRecyclerView.onClickButton(mList.get(getAdapterPosition()), getAdapterPosition());
+                if (getBindingAdapterPosition() != RecyclerView.NO_POSITION && getBindingAdapterPosition() < mList.size()) {
+                    listenerRecyclerView.onClickButton(mList.get(getBindingAdapterPosition()), getBindingAdapterPosition());
                 }
         }
 
@@ -175,7 +175,7 @@ public class BaseRecyclerView<T> extends RecyclerView.Adapter<BaseRecyclerView<?
         public void onClickItem4() {
             if (CommonActivity.isNullOrEmpty(mList)) return;
             if (listenerRecyclerView != null)
-                listenerRecyclerView.onClickItem4(mItem, getAdapterPosition());
+                listenerRecyclerView.onClickItem4(mItem, getBindingAdapterPosition());
         }
     }
 }

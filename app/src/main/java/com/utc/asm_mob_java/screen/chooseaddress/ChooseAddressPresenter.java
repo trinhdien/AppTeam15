@@ -115,7 +115,7 @@ public class ChooseAddressPresenter extends BasePresenterForm<ChooseAddressView>
     }
 
     public void onClickWard() {
-        if (currentProvince.get() == null) {
+        if (currentDistrict.get() == null) {
             Toast.makeText(mActivity, mActivity.getResources().getString(R.string.please_choose_district), Toast.LENGTH_SHORT).show();
             return;
         }

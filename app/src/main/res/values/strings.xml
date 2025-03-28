@@ -85,5 +85,6 @@
     <string name="please_enter_email">Vui lòng nhập email</string>
     <string name="plesase_enter_number_phone">Vui lòng nhập số điện thoại</string>
     <string name="please_choose_address">Vui lòng chọn địa chỉ</string>
+    <string name="choose">Chọn</string>
 
 </resources>
