@@ -47,6 +47,7 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
     private List<Option> optionList;
     private SharedPrefManager mSharedPrefManager;
     private User user;
+    private BottomSheetDialog bottomSheetDialog;
 
     public DetailPresenter(Context mContext, DetailView mView) {
         super(mContext, mView);
@@ -63,6 +64,7 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
         mProduct.set(mView.getProduct());
         tvPrice = new ObservableField<>(Objects.requireNonNull(mProduct.get()).getPrice());
         user = GsonUtils.String2Object(mSharedPrefManager.getUserLogin(), User.class);
+        bottomSheetDialog = new BottomSheetDialog(mActivity);
         fakeData();
     }
 
@@ -102,7 +104,6 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
     }
 
     public void showBottomSheet(String actionCode) {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(mActivity);
         LayoutBottomSheetBuyBinding binding = LayoutBottomSheetBuyBinding.inflate(mActivity.getLayoutInflater());
         bottomSheetDialog.setContentView(binding.getRoot());
         binding.getRoot().setOnTouchListener(new View.OnTouchListener() {
@@ -172,11 +173,13 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
                 user.setListCart(mListCart);
                 mSharedPrefManager.saveUserLogin(GsonUtils.Object2String(user));
                 Toast.makeText(mActivity, mActivity.getResources().getString(R.string.add_to_cart_success), Toast.LENGTH_SHORT).show();
+                bottomSheetDialog.dismiss();
             }
 
             @Override
             public void onCancel() {
                 Toast.makeText(mActivity, mActivity.getResources().getString(R.string.cancel_add_to_cart_success), Toast.LENGTH_SHORT).show();
+                bottomSheetDialog.dismiss();
             }
         };
         DialogUtils.showConfirmDialog(confirmListener, mActivity, null,mActivity.getResources().getString(R.string.confirm_add_to_cart)).show(mActivity.getSupportFragmentManager(), "");
@@ -219,14 +222,16 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
                 user.setListOrder(mListOrder);
                 mSharedPrefManager.saveUserLogin(GsonUtils.Object2String(user));
                 Toast.makeText(mActivity, mActivity.getResources().getString(R.string.order_success), Toast.LENGTH_SHORT).show();
+                bottomSheetDialog.dismiss();
             }
 
             @Override
             public void onCancel() {
                 Toast.makeText(mActivity, mActivity.getResources().getString(R.string.cancel_order_success), Toast.LENGTH_SHORT).show();
+                bottomSheetDialog.dismiss();
             }
         };
-        DialogUtils.showConfirmDialog(confirmListener, mActivity, null,mActivity.getResources().getString(R.string.confirm_add_to_cart));
+        DialogUtils.showConfirmDialog(confirmListener, mActivity, null,mActivity.getResources().getString(R.string.confirm_add_to_cart)).show(mActivity.getSupportFragmentManager(),"");
     }
 
     private void hideKeyboard(View view) {

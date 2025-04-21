@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.widget.Toast;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
@@ -16,6 +17,8 @@ import com.utc.asm_mob_java.callback.OnListenerRecyclerView;
 import com.utc.asm_mob_java.data.model.Cart;
 import com.utc.asm_mob_java.data.model.Product;
 import com.utc.asm_mob_java.data.model.User;
+import com.utc.asm_mob_java.dialog.BaseListener;
+import com.utc.asm_mob_java.dialog.DialogUtils;
 import com.utc.asm_mob_java.screen.detailscreen.DetailActivity;
 import com.utc.asm_mob_java.utils.CommonActivity;
 import com.utc.asm_mob_java.utils.Constants;
@@ -101,6 +104,31 @@ public class CartPresenter extends BasePresenterForm<CartView> {
             public void onClickItem4(Cart item, int position) {
                 super.onClickItem4(item, position);
                 goToDetail(item.getProduct());
+            }
+
+            @Override
+            public void onClickItem(Cart item, int position) {
+                super.onClickItem(item, position);
+                BaseListener confirmListener = new BaseListener() {
+                    @Override
+                    public void onConfirm() {
+                        super.onConfirm();
+                        mListCart.remove(item);
+                        user.setListCart(mListCart);
+                        mSharedPrefManager.saveUserLogin(GsonUtils.Object2String(user));
+                        Objects.requireNonNull(mAdapterCart.get()).notifyItemChanged(position);
+                        if(CommonActivity.isNullOrEmpty(mListCart)){
+                            isEmpty.set(true);
+                        }
+                        Toast.makeText(mActivity, mActivity.getResources().getString(R.string.delete_product_in_cart), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        super.onCancel();
+                    }
+                };
+                DialogUtils.showConfirmDialog(confirmListener, mActivity, null,mActivity.getResources().getString(R.string.confirm_del_product_in_cart)).show(mActivity.getSupportFragmentManager(),"");
             }
         });
     }

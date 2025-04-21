@@ -84,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
+                    android:layout_below="@+id/img_delete"
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_toEndOf="@+id/img_view"
                     android:orientation="vertical">
@@ -164,6 +164,13 @@
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+                <ImageView
+                    android:id="@+id/img_delete"
+                    android:onClick="@{() -> viewHolder.onClickItem()}"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_delete"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"/>
             </RelativeLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

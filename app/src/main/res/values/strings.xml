@@ -35,6 +35,8 @@
     <string name="confirm">Xác nhận</string>
     <string name="cancel">Huỷ</string>
     <string name="confirm_add_to_cart">Xác nhận thêm vào giỏ hàng</string>
+    <string name="confirm_buy_product">Xác nhận mua hàng</string>
+    <string name="confirm_del_product_in_cart">Xác nhận xoá sản phẩm trong giỏ hàng</string>
     <string name="warning_empty_cart">OOPS! giỏ hàng bạn đang trống</string>
     <string name="warning_order_empty">OOPS! bạn không có đơn hàng nào</string>
     <string name="new_name">Nhập tên mới</string>
@@ -86,5 +88,6 @@
     <string name="plesase_enter_number_phone">Vui lòng nhập số điện thoại</string>
     <string name="please_choose_address">Vui lòng chọn địa chỉ</string>
     <string name="choose">Chọn</string>
+    <string name="delete_product_in_cart">Đã xoá sản phẩm trong giỏ hàng</string>
 
 </resources>
