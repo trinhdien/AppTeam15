@@ -3,6 +3,7 @@ package com.utc.asm_mob_java.screen.morescreen;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +20,15 @@ import com.utc.asm_mob_java.base.baseactivity.BasePresenterForm;
 import com.utc.asm_mob_java.callback.OnListenerRecyclerView;
 import com.utc.asm_mob_java.data.model.DeliveryAddress;
 import com.utc.asm_mob_java.data.model.User;
+import com.utc.asm_mob_java.dialog.BaseListener;
+import com.utc.asm_mob_java.dialog.DialogUtils;
 import com.utc.asm_mob_java.dialog.dialogeditprofile.DialogEditProfile;
 import com.utc.asm_mob_java.dialog.dialogeditprofile.EditProfileListener;
 import com.utc.asm_mob_java.screen.chooseaddress.ChooseAddressCallBack;
 import com.utc.asm_mob_java.screen.chooseaddress.ChooseAddressFragment;
 import com.utc.asm_mob_java.utils.Common;
+import com.utc.asm_mob_java.utils.Config;
+import com.utc.asm_mob_java.utils.Constants;
 import com.utc.asm_mob_java.utils.GsonUtils;
 import com.utc.asm_mob_java.utils.SharedPrefManager;
 import com.utc.asm_mob_java.utils.StringUtils;
@@ -70,13 +75,56 @@ public class MorePresenter extends BasePresenterForm<MoreView> {
                 item.setDefault(true);
                 Objects.requireNonNull(mAdapterAddress.get()).notifyDataSetChanged();
             }
+
+            @Override
+            public void onClickEdit(DeliveryAddress item, int position) {
+                super.onClickEdit(item, position);
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.BundleKey.ITEM, GsonUtils.Object2String(item));
+                bundle.putInt(Constants.BundleKey.INT, position);
+                bundle.putString(Constants.BundleKey.ACTION, Config.ACTION_EDIT_ADDRESS);
+                ChooseAddressFragment fragment = ChooseAddressFragment.newInstance(bundle);
+                fragment.setCallBack(callBack);
+                Common.replaceFragment(mActivity, R.id.main, fragment);
+            }
+
+            @Override
+            public void onClickDelete(DeliveryAddress item, int position) {
+                super.onClickDelete(item, position);
+                DialogUtils.showConfirmDialog(new BaseListener() {
+                                                  @Override
+                                                  public void onConfirm() {
+                                                      super.onConfirm();
+                                                      mListAddress.remove(item);
+                                                      Objects.requireNonNull(mUser.get()).setAddress(mListAddress);
+                                                      mSharedPrefManager.saveUserLogin(GsonUtils.Object2String(mUser.get()));
+                                                      Objects.requireNonNull(mAdapterAddress.get()).notifyItemChanged(position);
+                                                  }
+                                              }, mActivity, mActivity.getResources().getString(R.string.notification),
+                                mActivity.getResources().getString(R.string.confirm_delete_address))
+                        .show(mActivity.getSupportFragmentManager(), "");
+            }
         });
-        callBack = deliveryAddress -> {
-            mListAddress.add(deliveryAddress);
-            Objects.requireNonNull(mUser.get()).setAddress(mListAddress);
-            mSharedPrefManager.saveUserLogin(GsonUtils.Object2String(mUser.get()));
-            Toast.makeText(mActivity, mActivity.getResources().getString(R.string.add_address_success), Toast.LENGTH_SHORT).show();
-            Objects.requireNonNull(mAdapterAddress.get()).notifyDataSetChanged();
+        callBack = new ChooseAddressCallBack() {
+            @Override
+            public void onChooseAddress(DeliveryAddress deliveryAddress) {
+                super.onChooseAddress(deliveryAddress);
+                mListAddress.add(deliveryAddress);
+                Objects.requireNonNull(mUser.get()).setAddress(mListAddress);
+                mSharedPrefManager.saveUserLogin(GsonUtils.Object2String(mUser.get()));
+                Toast.makeText(mActivity, mActivity.getResources().getString(R.string.add_address_success), Toast.LENGTH_SHORT).show();
+                Objects.requireNonNull(mAdapterAddress.get()).notifyDataSetChanged();
+            }
+
+            @Override
+            public void onEditAddress(DeliveryAddress deliveryAddress, int position) {
+                super.onEditAddress(deliveryAddress, position);
+                mListAddress.set(position, deliveryAddress);
+                Objects.requireNonNull(mUser.get()).setAddress(mListAddress);
+                mSharedPrefManager.saveUserLogin(GsonUtils.Object2String(mUser.get()));
+                Toast.makeText(mActivity, mActivity.getResources().getString(R.string.add_address_success), Toast.LENGTH_SHORT).show();
+                Objects.requireNonNull(mAdapterAddress.get()).notifyDataSetChanged();
+            }
         };
     }
 

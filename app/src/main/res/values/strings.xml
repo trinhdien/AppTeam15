@@ -89,5 +89,7 @@
     <string name="please_choose_address">Vui lòng chọn địa chỉ</string>
     <string name="choose">Chọn</string>
     <string name="delete_product_in_cart">Đã xoá sản phẩm trong giỏ hàng</string>
+    <string name="notification">Thông báo</string>
+    <string name="confirm_delete_address">Bạn có chắc chắn muốn xoá địa chỉ này?</string>
 
 </resources>

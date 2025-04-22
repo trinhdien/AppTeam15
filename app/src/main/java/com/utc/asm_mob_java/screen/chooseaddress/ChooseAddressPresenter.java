@@ -16,6 +16,7 @@ import com.utc.asm_mob_java.data.source.response.GetAddressResponse;
 import com.utc.asm_mob_java.dialog.dialogfilter.DialogFilter;
 import com.utc.asm_mob_java.dialog.dialogfilter.DialogFilterListener;
 import com.utc.asm_mob_java.utils.CommonActivity;
+import com.utc.asm_mob_java.utils.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,10 @@ public class ChooseAddressPresenter extends BasePresenterForm<ChooseAddressView>
     private List<District> mListDistrictTemp;
     private List<Ward> mListWardTemp;
     private AddressRepository repository;
+    private String action;
+    private int position;
+    private boolean isEditAddress;
+
 
     public ChooseAddressPresenter(Context mContext, ChooseAddressView mView) {
         super(mContext, mView);
@@ -63,6 +68,19 @@ public class ChooseAddressPresenter extends BasePresenterForm<ChooseAddressView>
         name = new ObservableField<>();
         mListDistrictTemp = new ArrayList<>();
         mListWardTemp = new ArrayList<>();
+        action = mView.getAction();
+        position = mView.getPosition();
+        DeliveryAddress oldDeliveryAddress = mView.onGetDeliveryAddress();
+        if (action.contains(Config.ACTION_EDIT_ADDRESS)) {
+            currentProvince.set(oldDeliveryAddress.getProvince());
+            currentDistrict.set(oldDeliveryAddress.getDistrict());
+            currentWard.set(oldDeliveryAddress.getWard());
+            address.set(oldDeliveryAddress.getAddress());
+            name.set(oldDeliveryAddress.getName());
+            numberPhone.set(oldDeliveryAddress.getPhoneNumber());
+            addressDetail.set(oldDeliveryAddress.getAddressDetail());
+            isEditAddress = true;
+        }
         getProvince();
     }
 
@@ -172,6 +190,9 @@ public class ChooseAddressPresenter extends BasePresenterForm<ChooseAddressView>
             deliveryAddress.setPhoneNumber(numberPhone.get());
             deliveryAddress.setName(name.get());
             deliveryAddress.setDefault(false);
+            if (isEditAddress) {
+                mView.onEdit(deliveryAddress, position);
+            }
             mView.onConfirmClick(deliveryAddress);
         }
     }

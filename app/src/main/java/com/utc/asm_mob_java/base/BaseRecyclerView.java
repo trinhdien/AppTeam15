@@ -177,5 +177,15 @@ public class BaseRecyclerView<T> extends RecyclerView.Adapter<BaseRecyclerView<?
             if (listenerRecyclerView != null)
                 listenerRecyclerView.onClickItem4(mItem, getBindingAdapterPosition());
         }
+        public void onClickEdit(){
+            if (CommonActivity.isNullOrEmpty(mList)) return;
+            if (listenerRecyclerView != null)
+                listenerRecyclerView.onClickEdit(mItem, getBindingAdapterPosition());
+        }
+        public void onClickDelete(){
+            if (CommonActivity.isNullOrEmpty(mList)) return;
+            if (listenerRecyclerView != null)
+                listenerRecyclerView.onClickDelete(mItem, getBindingAdapterPosition());
+        }
     }
 }

@@ -5,4 +5,8 @@ import com.utc.asm_mob_java.data.model.DeliveryAddress;
 
 public interface ChooseAddressView extends BaseView<ChooseAddressPresenter> {
     void onConfirmClick(DeliveryAddress address);
+    DeliveryAddress onGetDeliveryAddress();
+    String getAction();
+    int getPosition();
+    void onEdit(DeliveryAddress address, int position);
 }
