@@ -64,7 +64,13 @@ public class RegisterPresenter extends BasePresenterForm<RegisterView> {
         } else {
             mListUser = new ArrayList<>(Objects.requireNonNull(GsonUtils.String2ListObject(mSharedPrefManager.getListUser(), User[].class)));
         }
-        callBack = deliveryAddress -> deliveryAddressCurrent.set(deliveryAddress);
+        callBack = new ChooseAddressCallBack() {
+            @Override
+            public void onChooseAddress(DeliveryAddress deliveryAddress) {
+                super.onChooseAddress(deliveryAddress);
+                deliveryAddressCurrent.set(deliveryAddress);
+            }
+        };
     }
 
     public void onCancelClick() {
