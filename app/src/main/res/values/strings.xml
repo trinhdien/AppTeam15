@@ -91,5 +91,9 @@
     <string name="delete_product_in_cart">Đã xoá sản phẩm trong giỏ hàng</string>
     <string name="notification">Thông báo</string>
     <string name="confirm_delete_address">Bạn có chắc chắn muốn xoá địa chỉ này?</string>
+    <string name="email_not_true">Email không hợp lệ</string>
+    <string name="number_phone_not_true">Số điện thoại không hợp lệ</string>
+    <string name="please_choose_birth">Vui lòng chọn ngày sinh</string>
+    <string name="name_not_true">Độ dài từ 5 đến 20 ký tự Chỉ chứa chữ cái, số, dấu _</string>
 
 </resources>

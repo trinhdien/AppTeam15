@@ -7,6 +7,8 @@ public class Cart {
     private Product product;
     @Expose
     private boolean isChoose;
+    @Expose
+    private String dateTime;
 
     public Product getProduct() {
         return product;
@@ -22,5 +24,13 @@ public class Cart {
 
     public void setChoose(boolean choose) {
         isChoose = choose;
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
 }

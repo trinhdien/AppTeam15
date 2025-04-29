@@ -29,10 +29,10 @@ import com.utc.asm_mob_java.databinding.LayoutBottomSheetBuyBinding;
 import com.utc.asm_mob_java.dialog.BaseListener;
 import com.utc.asm_mob_java.dialog.DialogUtils;
 import com.utc.asm_mob_java.utils.CommonActivity;
+import com.utc.asm_mob_java.utils.DateUtils;
 import com.utc.asm_mob_java.utils.GsonUtils;
 import com.utc.asm_mob_java.utils.SharedPrefManager;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -169,6 +169,7 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
                 Cart cart = new Cart();
                 cart.setProduct(mProduct.get());
                 cart.setChoose(false);
+                cart.setDateTime(DateUtils.convertDateToStringPattern(new Date(), DateUtils.DATE_PATTERN_1));
                 mListCart.add(cart);
                 user.setListCart(mListCart);
                 mSharedPrefManager.saveUserLogin(GsonUtils.Object2String(user));
@@ -190,6 +191,7 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
             tvNumber.set(String.valueOf(Integer.parseInt(Objects.requireNonNull(tvNumber.get())) - 1));
             tvPrice.set(String.valueOf(Integer.parseInt(Objects.requireNonNull(mProduct.get()).getPrice()) * Integer.parseInt(Objects.requireNonNull(tvNumber.get()))));
             Objects.requireNonNull(mProduct.get()).setNumberBuy(tvNumber.get());
+            Objects.requireNonNull(mProduct.get()).setNumberBuyTemp(tvNumber.get());
 
         }
     }
@@ -198,6 +200,7 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
         tvNumber.set(String.valueOf(Integer.parseInt(Objects.requireNonNull(tvNumber.get())) + 1));
         tvPrice.set(String.valueOf(Integer.parseInt(Objects.requireNonNull(mProduct.get()).getPrice()) * Integer.parseInt(Objects.requireNonNull(tvNumber.get()))));
         Objects.requireNonNull(mProduct.get()).setNumberBuy(tvNumber.get());
+        Objects.requireNonNull(mProduct.get()).setNumberBuyTemp(tvNumber.get());
     }
 
     public void onBuyBow() {
@@ -205,8 +208,6 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
             @Override
             public void onConfirm() {
                 @SuppressLint("SimpleDateFormat")
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                String formattedDate = sdf.format(new Date());
                 List<Order> mListOrder;
                 if (CommonActivity.isNullOrEmpty(Objects.requireNonNull(user).getListOrder())) {
                     mListOrder = new ArrayList<>();
@@ -216,7 +217,7 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
                 }
                 Order order = new Order();
                 order.setProduct(mProduct.get());
-                order.setDateTime(formattedDate);
+                order.setDateTime(DateUtils.convertDateToStringPattern(new Date(),DateUtils.DATE_PATTERN_1));
                 order.setStatus(mActivity.getResources().getString(R.string.delivering));
                 mListOrder.add(order);
                 user.setListOrder(mListOrder);
@@ -231,7 +232,7 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
                 bottomSheetDialog.dismiss();
             }
         };
-        DialogUtils.showConfirmDialog(confirmListener, mActivity, null,mActivity.getResources().getString(R.string.confirm_add_to_cart)).show(mActivity.getSupportFragmentManager(),"");
+        DialogUtils.showConfirmDialog(confirmListener, mActivity, null,mActivity.getResources().getString(R.string.confirm_buy_product)).show(mActivity.getSupportFragmentManager(),"");
     }
 
     private void hideKeyboard(View view) {

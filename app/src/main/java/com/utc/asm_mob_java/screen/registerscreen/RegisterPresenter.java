@@ -18,6 +18,7 @@ import com.utc.asm_mob_java.utils.CommonActivity;
 import com.utc.asm_mob_java.utils.Constants;
 import com.utc.asm_mob_java.utils.GsonUtils;
 import com.utc.asm_mob_java.utils.SharedPrefManager;
+import com.utc.asm_mob_java.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,7 +122,7 @@ public class RegisterPresenter extends BasePresenterForm<RegisterView> {
             return false;
         }
         if (!Objects.equals(pass.get(), passAgain.get())) {
-            mView.showMessage(mActivity.getResources().getString(R.string.dont_match_pass_or_username));
+            mView.showMessage("Mật khẩu nhập lại không khớp");
             return false;
         }
         if (CommonActivity.isNullOrEmpty(phone.get())) {
@@ -130,6 +131,31 @@ public class RegisterPresenter extends BasePresenterForm<RegisterView> {
         }
         if (CommonActivity.isNullOrEmpty(deliveryAddressCurrent.get())) {
             mView.showMessage(mActivity.getResources().getString(R.string.please_choose_address));
+            return false;
+        }
+        if (CommonActivity.isNullOrEmpty(birthday.get())) {
+            mView.showMessage(mActivity.getString(R.string.please_choose_birth));
+            return false;
+        }
+        if (!StringUtils.isValidEmail(email.get())) {
+            mView.showMessage(mActivity.getString(R.string.email_not_true));
+            return false;
+        }
+        if (!StringUtils.isValidVietnamPhoneNumber(phone.get())) {
+            mView.showMessage(mActivity.getString(R.string.number_phone_not_true));
+            return false;
+        }
+        if (!StringUtils.isValidPassword(pass.get())) {
+            DialogUtils.showErrDialog(mActivity,
+                            "Ít nhất 1 chữ cái (A-Z, a-z)\n" +
+                                    "Ít nhất 1 số (0-9)\n" +
+                                    "Ít nhất 1 ký tự đặc biệt (@, $, !, %, *, ?, &)\n" +
+                                    "Độ dài từ 8 đến 20 ký tự")
+                    .show(mActivity.getSupportFragmentManager(), "");
+            return false;
+        }
+        if (!StringUtils.isValidUsername(username.get())) {
+            mView.showMessage(mActivity.getString(R.string.name_not_true));
             return false;
         }
         return true;

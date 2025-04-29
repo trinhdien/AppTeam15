@@ -113,6 +113,7 @@
                 android:background="@drawable/bg_btn_buy_now"
                 android:paddingVertical="@dimen/_10sdp"
                 android:text="@string/buy_product"
+                android:onClick="@{v -> presenter.onBuy()}"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_16sdp"

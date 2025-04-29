@@ -17,6 +17,7 @@ import com.utc.asm_mob_java.dialog.dialogfilter.DialogFilter;
 import com.utc.asm_mob_java.dialog.dialogfilter.DialogFilterListener;
 import com.utc.asm_mob_java.utils.CommonActivity;
 import com.utc.asm_mob_java.utils.Config;
+import com.utc.asm_mob_java.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -218,6 +219,14 @@ public class ChooseAddressPresenter extends BasePresenterForm<ChooseAddressView>
             mView.showMessage(String.format(mActivity.getResources().getString(R.string.please), mActivity.getResources().getString(R.string.choose_ward)));
             return false;
 
+        }
+        if (!StringUtils.isValidVietnamPhoneNumber(numberPhone.get())) {
+            mView.showMessage(mActivity.getString(R.string.number_phone_not_true));
+            return false;
+        }
+        if (!StringUtils.isValidUsername(name.get())) {
+            mView.showMessage(mActivity.getString(R.string.name_not_true));
+            return false;
         }
         return true;
     }

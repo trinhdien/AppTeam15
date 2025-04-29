@@ -35,7 +35,7 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(String id,Integer img, String title, String price, String sold, String description, String number) {
+    public Product(String id, Integer img, String title, String price, String sold, String description, String number) {
         this.img = img;
         this.title = title;
         this.price = price;
@@ -102,7 +102,7 @@ public class Product implements Serializable {
     }
 
     public String getNumberBuyTemp() {
-        return CommonActivity.isNullOrEmpty(numberBuyTemp) ?  "1" : numberBuyTemp;
+        return CommonActivity.isNullOrEmpty(numberBuyTemp) ? "1" : numberBuyTemp;
     }
 
     public void setNumberBuyTemp(String numberBuyTemp) {
@@ -139,5 +139,9 @@ public class Product implements Serializable {
 
     public void setLstOption(List<Option> lstOption) {
         this.lstOption = lstOption;
+    }
+
+    public String getPriceTotal() {
+        return String.valueOf(Integer.parseInt(this.price) * Integer.parseInt(this.numberBuy));
     }
 }

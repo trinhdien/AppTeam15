@@ -73,11 +73,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_5"
-                        android:text="@{`Giá: ` + item.product.price + ` VNĐ`}"
+                        android:text="@{`Giá: ` + item.product.priceTotal + ` VNĐ`}"
                         android:textColor="@color/price"
                         android:textSize="@dimen/_16sdp"
                         tools:ignore="SpUsage" />
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:text="@{`Số lượng: ` + item.product.numberBuy}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"
+                        tools:ignore="SpUsage" />
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
