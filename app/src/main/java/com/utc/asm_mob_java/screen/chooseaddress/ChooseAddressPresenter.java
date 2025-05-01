@@ -220,14 +220,14 @@ public class ChooseAddressPresenter extends BasePresenterForm<ChooseAddressView>
             return false;
 
         }
-        if (!StringUtils.isValidVietnamPhoneNumber(numberPhone.get())) {
+        if (StringUtils.isValidVietnamPhoneNumber(numberPhone.get())) {
             mView.showMessage(mActivity.getString(R.string.number_phone_not_true));
             return false;
         }
-        if (!StringUtils.isValidUsername(name.get())) {
-            mView.showMessage(mActivity.getString(R.string.name_not_true));
-            return false;
-        }
+//        if (StringUtils.isValidUsername(name.get())) {
+//            mView.showMessage(mActivity.getString(R.string.name_not_true));
+//            return false;
+//        }
         return true;
     }
 }

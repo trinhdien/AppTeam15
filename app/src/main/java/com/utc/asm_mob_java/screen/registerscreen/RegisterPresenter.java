@@ -141,23 +141,24 @@ public class RegisterPresenter extends BasePresenterForm<RegisterView> {
             mView.showMessage(mActivity.getString(R.string.email_not_true));
             return false;
         }
-        if (!StringUtils.isValidVietnamPhoneNumber(phone.get())) {
+        if (StringUtils.isValidVietnamPhoneNumber(phone.get())) {
             mView.showMessage(mActivity.getString(R.string.number_phone_not_true));
             return false;
         }
         if (!StringUtils.isValidPassword(pass.get())) {
             DialogUtils.showErrDialog(mActivity,
-                            "Ít nhất 1 chữ cái (A-Z, a-z)\n" +
+                            "Mật khẩu không hợp lệ\n" +
+                                    " Ít nhất 1 chữ cái (A-Z, a-z)\n" +
                                     "Ít nhất 1 số (0-9)\n" +
                                     "Ít nhất 1 ký tự đặc biệt (@, $, !, %, *, ?, &)\n" +
                                     "Độ dài từ 8 đến 20 ký tự")
                     .show(mActivity.getSupportFragmentManager(), "");
             return false;
         }
-        if (!StringUtils.isValidUsername(username.get())) {
-            mView.showMessage(mActivity.getString(R.string.name_not_true));
-            return false;
-        }
+//        if (StringUtils.isValidUsername(username.get())) {
+//            mView.showMessage(mActivity.getString(R.string.name_not_true));
+//            return false;
+//        }
         return true;
     }
 

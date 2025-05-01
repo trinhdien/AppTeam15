@@ -39,13 +39,13 @@ public class StringUtils {
     //Tổng cộng 10 số
     public static boolean isValidVietnamPhoneNumber(String phone) {
         String phonePattern = "^(\\+84|0)[3|5|7|8|9][0-9]{8}$";
-        return phone != null && phone.matches(phonePattern);
+        return phone == null || !phone.matches(phonePattern);
     }
 
     //Độ dài từ 5 đến 20 ký tự Chỉ chứa chữ cái, số, dấu _
     public static boolean isValidUsername(String username) {
         String usernamePattern = "^[a-zA-Z0-9_]{5,20}$";
-        return username != null && username.matches(usernamePattern);
+        return username == null || !username.matches(usernamePattern);
     }
 
     //Ít nhất 1 chữ cái (A-Z, a-z)

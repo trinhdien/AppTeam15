@@ -1,5 +1,7 @@
 package com.utc.asm_mob_java.data.model;
 
+import android.graphics.Color;
+
 import com.google.gson.annotations.Expose;
 
 public class Order {
@@ -9,6 +11,8 @@ public class Order {
     private String dateTime;
     @Expose
     private String status;
+    @Expose
+    private String colorCode;
     public Product getProduct() {
         return product;
     }
@@ -32,4 +36,21 @@ public class Order {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getColorCode() {
+        return colorCode;
+    }
+
+    public void setColorCode(String colorCode) {
+        this.colorCode = colorCode;
+    }
+
+    public int getColor(){
+        if ("1".equals(colorCode)){
+            return Color.parseColor("#00504B");
+        }else {
+            return Color.parseColor("#76BB68");
+        }
+    }
+
 }
