@@ -11,7 +11,7 @@ public class DateUtils {
     public static String convertDateToStringPattern(Date date, String pattern) {
         try {
             @SuppressLint("SimpleDateFormat")
-            SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN_1);
+            SimpleDateFormat sdf = new SimpleDateFormat(pattern);
             return sdf.format(date);
         } catch (Exception e) {
             return "";

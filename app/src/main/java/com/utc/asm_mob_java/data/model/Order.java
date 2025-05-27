@@ -52,5 +52,8 @@ public class Order {
             return Color.parseColor("#76BB68");
         }
     }
+    public boolean isCancel(){
+        return "1".equals(colorCode);
+    }
 
 }

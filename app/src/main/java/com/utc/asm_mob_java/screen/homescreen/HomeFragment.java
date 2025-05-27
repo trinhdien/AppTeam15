@@ -1,6 +1,8 @@
 package com.utc.asm_mob_java.screen.homescreen;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 
 import com.utc.asm_mob_java.R;
 import com.utc.asm_mob_java.base.basefragment.BaseBindingFragment;
@@ -24,6 +26,22 @@ public class HomeFragment extends BaseBindingFragment<HomeFragmentBinding, HomeP
         mPresenter = new HomePresenter(mActivity, this);
         mBinding.setPresenter(mPresenter);
         mPresenter.loadLocalImages(mBinding.slider);
+        mBinding.tvSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mPresenter.onSearch(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @Override

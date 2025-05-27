@@ -20,6 +20,7 @@ import com.utc.asm_mob_java.utils.CommonActivity;
 import com.utc.asm_mob_java.utils.Constants;
 import com.utc.asm_mob_java.utils.GsonUtils;
 import com.utc.asm_mob_java.utils.SharedPrefManager;
+import com.utc.asm_mob_java.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,14 +70,14 @@ public class HomePresenter extends BasePresenterForm<HomeView> {
         if (!CommonActivity.isNullOrEmpty(mSharedPrefManager.getListProduct())) {
             mList.addAll(Objects.requireNonNull(GsonUtils.String2ListObject(mSharedPrefManager.getListProduct(), Product[].class)));
         } else {
-            mList.add(new Product("1",R.drawable.poster_1, "Gấu bông 1", "200000", "1000", "Đây 1 chú gấu siêu cute hãy sở hữu nó","100000"));
-            mList.add(new Product("2",R.drawable.poster_2, "Gấu bông 2", "300000", "2000", "Đây 1 chú gấu siêu cute hãy sở hữu nó","200000"));
-            mList.add(new Product("3",R.drawable.poster_3, "Gấu bông 3", "400000", "3000", "Đây 1 chú gấu siêu cute hãy sở hữu nó","300000"));
-            mList.add(new Product("4",R.drawable.poster_4, "Gấu bông 4", "500000", "4000", "Đây 1 chú gấu siêu cute hãy sở hữu nó","400000"));
-            mList.add(new Product("5",R.drawable.poster_5, "Gấu bông 5", "600000", "5000", "Đây 1 chú gấu siêu cute hãy sở hữu nó","500000"));
-            mList.add(new Product("6",R.drawable.poster_6, "Gấu bông 6", "700000", "6000", "Đây 1 chú gấu siêu cute hãy sở hữu nó","600000"));
-            mList.add(new Product("7",R.drawable.poster_7, "Gấu bông 7", "800000", "7000", "Đây 1 chú gấu siêu cute hãy sở hữu nó","700000"));
-            mList.add(new Product("8",R.drawable.poster_8, "Gấu bông 8", "900000", "8000", "Đây 1 chú gấu siêu cute hãy sở hữu nó","800000"));
+            mList.add(new Product("1", R.drawable.poster_1, "Gấu bông 1", "200000", "1000", "Đây 1 chú gấu siêu cute hãy sở hữu nó", "100000"));
+            mList.add(new Product("2", R.drawable.poster_2, "Gấu bông 2", "300000", "2000", "Đây 1 chú gấu siêu cute hãy sở hữu nó", "200000"));
+            mList.add(new Product("3", R.drawable.poster_3, "Gấu bông 3", "400000", "3000", "Đây 1 chú gấu siêu cute hãy sở hữu nó", "300000"));
+            mList.add(new Product("4", R.drawable.poster_4, "Gấu bông 4", "500000", "4000", "Đây 1 chú gấu siêu cute hãy sở hữu nó", "400000"));
+            mList.add(new Product("5", R.drawable.poster_5, "Gấu bông 5", "600000", "5000", "Đây 1 chú gấu siêu cute hãy sở hữu nó", "500000"));
+            mList.add(new Product("6", R.drawable.poster_6, "Gấu bông 6", "700000", "6000", "Đây 1 chú gấu siêu cute hãy sở hữu nó", "600000"));
+            mList.add(new Product("7", R.drawable.poster_7, "Gấu bông 7", "800000", "7000", "Đây 1 chú gấu siêu cute hãy sở hữu nó", "700000"));
+            mList.add(new Product("8", R.drawable.poster_8, "Gấu bông 8", "900000", "8000", "Đây 1 chú gấu siêu cute hãy sở hữu nó", "800000"));
             mSharedPrefManager.saveListProduct(GsonUtils.Object2String(mList));
         }
 
@@ -89,5 +90,26 @@ public class HomePresenter extends BasePresenterForm<HomeView> {
         Intent intent = new Intent(mActivity, DetailActivity.class);
         intent.putExtra(Constants.BundleKey.ITEM, bundle);
         mActivity.startActivity(intent);
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void onSearch(String string) {
+        mList.clear();
+        List<Product> list = new ArrayList<>(Objects.requireNonNull(
+                GsonUtils.String2ListObject(mSharedPrefManager.getListProduct(), Product[].class)));
+
+        if (CommonActivity.isNullOrEmpty(string)) {
+            mList.addAll(list);
+        } else {
+            String searchNormalized = StringUtils.normalize(string);
+            for (Product item : list) {
+                String titleNormalized = StringUtils.normalize(item.getTitle());
+                if (titleNormalized.contains(searchNormalized)) {
+                    mList.add(item);
+                }
+            }
+        }
+
+        Objects.requireNonNull(mAdapter.get()).notifyDataSetChanged();
     }
 }

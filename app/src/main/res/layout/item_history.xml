@@ -11,6 +11,7 @@
         <variable
             name="viewHolder"
             type="com.utc.asm_mob_java.base.BaseRecyclerView.BaseViewHolder" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.cardview.widget.CardView
@@ -119,6 +120,16 @@
                             tools:ignore="SpUsage" />
                     </LinearLayout>
                 </LinearLayout>
+
+                <ImageView
+                    android:visibility="@{item.isCancel ? View.GONE : View.VISIBLE}"
+                    android:onClick="@{()-> viewHolder.onClickDelete()}"
+                    android:src="@drawable/ic_close"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    tools:ignore="ContentDescription" />
+
             </RelativeLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

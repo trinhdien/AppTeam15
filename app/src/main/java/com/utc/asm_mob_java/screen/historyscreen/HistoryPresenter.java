@@ -15,6 +15,8 @@ import com.utc.asm_mob_java.callback.OnListenerRecyclerView;
 import com.utc.asm_mob_java.data.model.Order;
 import com.utc.asm_mob_java.data.model.Product;
 import com.utc.asm_mob_java.data.model.User;
+import com.utc.asm_mob_java.dialog.BaseListener;
+import com.utc.asm_mob_java.dialog.DialogUtils;
 import com.utc.asm_mob_java.screen.detailscreen.DetailActivity;
 import com.utc.asm_mob_java.utils.CommonActivity;
 import com.utc.asm_mob_java.utils.Constants;
@@ -59,6 +61,23 @@ public class HistoryPresenter extends BasePresenterForm<HistoryView> {
             public void onClickItem(Order item, int position) {
                 super.onClickItem(item, position);
                 goToDetail(item.getProduct());
+            }
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onClickDelete(Order item, int position) {
+                super.onClickDelete(item, position);
+                DialogUtils.showConfirmDialog(new BaseListener() {
+                    @Override
+                    public void onConfirm() {
+                        super.onConfirm();
+                        item.setColorCode("1");
+                        item.setStatus("Đã huỷ");
+                        mListOrder.set(position,item);
+                        mUser.setListOrder(mListOrder);
+                        mSharedPrefManager.saveUserLogin(GsonUtils.Object2String(mUser));
+                        Objects.requireNonNull(mAdapterOrder.get()).notifyDataSetChanged();
+                    }
+                }, mActivity, "Huỷ đơn hàng", "Bạn có chắc muốn huỷ đơn hàng này?").show(mActivity.getSupportFragmentManager(),"");
             }
         });
     }
