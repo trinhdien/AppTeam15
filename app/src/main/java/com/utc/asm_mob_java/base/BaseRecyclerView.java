@@ -12,9 +12,10 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
-import androidx.databinding.library.baseAdapters.BR;
+//import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.utc.asm_mob_java.BR;
 import com.utc.asm_mob_java.R;
 import com.utc.asm_mob_java.callback.OnListenerItemRecyclerView;
 import com.utc.asm_mob_java.callback.OnListenerRecyclerView;
@@ -118,27 +119,27 @@ public class BaseRecyclerView<T> extends RecyclerView.Adapter<BaseRecyclerView<?
         public void bind(T mItem) {
             this.mItem = mItem;
             mBinding.setVariable(BR.item, mItem);
-            mBinding.setVariable(BR.viewHolder, this);
-            if (mBinding.getRoot().findViewById(R.id.edt_number) != null) {
-                EditText editText = mBinding.getRoot().findViewById(R.id.edt_number);
-                editText.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-                        if (listenerRecyclerView != null)
-                            listenerRecyclerView.afterTextChanged(mItem, getBindingAdapterPosition(), editable);
-                    }
-                });
-            }
+//            mBinding.setVariable(BR.viewHolder, this);
+//            if (mBinding.getRoot().findViewById(R.id.edt_number) != null) {
+//                EditText editText = mBinding.getRoot().findViewById(R.id.edt_number);
+//                editText.addTextChangedListener(new TextWatcher() {
+//                    @Override
+//                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//                    }
+//
+//                    @Override
+//                    public void afterTextChanged(Editable editable) {
+//                        if (listenerRecyclerView != null)
+//                            listenerRecyclerView.afterTextChanged(mItem, getBindingAdapterPosition(), editable);
+//                    }
+//                });
+//            }
         }
 
         public void onClickItem() {

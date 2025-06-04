@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
     <color name="grey31">#CCF1F2F3</color>
     <color name="transparent">#00ffffff</color>
     <color name="black_opacity_30">#4D000000</color>
@@ -11,9 +9,13 @@
     <color name="price">#B11A27</color>
     <color name="gray">#B8BEC3</color>
     <color name="orange">#DE591C</color>
-    <color name="green">#73D06F</color>
     <color name="brown">#BCB19F</color>
     <color name="grey_bright">#757575</color>
     <color name="grey_five">#ededed</color>
-
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="primary">#FF6200EE</color>
+    <color name="green">#FF4CAF50</color>
+    <color name="text_secondary">#FF757575</color>
+    <color name="text_tertiary">#FFBDBDBD</color>
 </resources>

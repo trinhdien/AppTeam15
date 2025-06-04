@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -13,11 +12,7 @@ import android.widget.EditText;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.utc.asm_mob_java.screen.loginscreen.LoginActivity;
-import com.utc.asm_mob_java.screen.mainscreen.MainScreenActivity;
-import com.utc.asm_mob_java.utils.CommonActivity;
-import com.utc.asm_mob_java.utils.Constants;
-import com.utc.asm_mob_java.utils.SharedPrefManager;
+import com.utc.asm_mob_java.screen.news.NewsActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +22,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        fakeData();
+        Intent intent = new Intent(this, NewsActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -53,28 +50,5 @@ public class MainActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             view.clearFocus();
         }
-    }
-
-    private void fakeData() {
-        SharedPrefManager mSharedPrefManager = new SharedPrefManager(this);
-        if (!CommonActivity.isNullOrEmpty(mSharedPrefManager.getUserLogin())) {
-            new Handler().postDelayed(() -> gotoMainScreen(mSharedPrefManager.getUserLogin()), 1000);
-        } else {
-            new Handler().postDelayed(this::gotoLogin, 1000);
-
-        }
-    }
-
-    private void gotoMainScreen(String user) {
-        Bundle bundle = new Bundle();
-        bundle.putString(Constants.BundleKey.USER, user);
-        Intent intent = new Intent(this, MainScreenActivity.class);
-        startActivity(intent);
-        finish();
-    }
-    private void gotoLogin(){
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish();
     }
 }

@@ -3,20 +3,22 @@ package com.utc.asm_mob_java.dialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.utc.asm_mob_java.R;
 import com.utc.asm_mob_java.dialog.dialogconfirm.ConfirmDialog;
 
 import java.util.Calendar;
 
 public class DialogUtils {
-    public static ConfirmDialog showErrDialog(Context context, String err) {
-        return new ConfirmDialog(null, context.getResources()
+    public static void showErrDialog(AppCompatActivity activity, String err) {
+        new ConfirmDialog(null, activity.getResources()
                 .getString(R.string.error), err,
-                true, "", context.getResources().getString(R.string.ok));
+                true, "", activity.getResources().getString(R.string.ok)).show(activity.getSupportFragmentManager(), "");
     }
 
-    public static ConfirmDialog showConfirmDialog(BaseListener confirmListener, Context context, String title, String mess) {
-        return new ConfirmDialog(confirmListener, title == null ? context.getResources().getString(R.string.confirm) : title, mess);
+    public static void showConfirmDialog(BaseListener confirmListener, AppCompatActivity activity, String title, String mess) {
+        new ConfirmDialog(confirmListener, title == null ? activity.getResources().getString(R.string.confirm) : title, mess).show(activity.getSupportFragmentManager(), "");
     }
 
     public static void showDatePickerDialog(Context context, OnDateSelectedListener listener) {

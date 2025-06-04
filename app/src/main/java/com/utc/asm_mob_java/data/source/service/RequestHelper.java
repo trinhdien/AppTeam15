@@ -9,25 +9,25 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RequestHelper {
-    private static ShopBearApi instance;
+    private static RentRoomApi instance;
 
-    public static ShopBearApi getInstanceAddress() {
+    public static RentRoomApi getInstanceAddress() {
         if (instance == null) {
             instance = getApiServiceAddress();
         }
         return instance;
     }
 
-    public static ShopBearApi getApiServiceAddress() {
+    public static RentRoomApi getApiServiceAddress() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Config.URL_ADDRESS)
+                .baseUrl(Config.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .client(httpClient.build())
                 .build();
-        return retrofit.create(ShopBearApi.class);
+        return retrofit.create(RentRoomApi.class);
     }
 }
