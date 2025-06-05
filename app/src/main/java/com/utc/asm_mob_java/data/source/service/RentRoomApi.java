@@ -11,4 +11,6 @@ import retrofit2.http.POST;
 public interface RentRoomApi {
     @POST(Config.BASE_URL +  "getNewsById")
     Observable<NewsResponse> getNewsByUserid(@Body NewsRequest request);
+    @POST(Config.BASE_URL +  "getDetailNews")
+    Observable<NewsResponse> getDetailNews(@Body NewsRequest request);
 }

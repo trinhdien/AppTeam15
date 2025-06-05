@@ -1,10 +1,13 @@
 package com.utc.asm_mob_java.utils;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 import java.text.Normalizer;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class StringUtils {
     public static Bitmap convertBase64ToBitmap(String base64String) {
@@ -56,9 +59,26 @@ public class StringUtils {
         String passwordPattern = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$";
         return password != null && password.matches(passwordPattern);
     }
+
     public static String normalize(String input) {
         String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
         return normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "").toLowerCase();
+    }
+
+    @SuppressLint("DefaultLocale")
+    public static String formatIntToPrice(int price){
+        NumberFormat nf = NumberFormat.getInstance(Locale.US); // Dùng dấu phẩy (,)
+        return nf.format(price);
+    }
+    public static String privateNumberPhone(String numberPhone) {
+        if(CommonActivity.isNullOrEmpty(numberPhone)){
+            return "";
+        }
+        if (numberPhone.length() <= 6) {
+            return "*".repeat(numberPhone.length());
+        }
+        String hienThi = numberPhone.substring(0, numberPhone.length() - 6);
+        return hienThi + "******";
     }
 
 }

@@ -29,4 +29,9 @@ public class RentRoomRemoteDataSource implements IRentRoomRemoteDataSource {
     public Observable<NewsResponse> getNewsByUserid(NewsRequest request) {
         return rentRoomApi.getNewsByUserid(request);
     }
+
+    @Override
+    public Observable<NewsResponse> getDetailNews(NewsRequest request) {
+        return rentRoomApi.getDetailNews(request);
+    }
 }

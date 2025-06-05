@@ -9,4 +9,5 @@ import io.reactivex.rxjava3.core.Observable;
 
 public interface IRentRoomRemoteDataSource {
     Observable<NewsResponse> getNewsByUserid(NewsRequest request);
+    Observable<NewsResponse> getDetailNews(NewsRequest request);
 }

@@ -1,29 +1,19 @@
-package com.utc.asm_mob_java.screen.news;
+package com.utc.asm_mob_java.screen.detail;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 
 import androidx.databinding.ObservableField;
 
-import com.utc.asm_mob_java.R;
-import com.utc.asm_mob_java.base.BaseRecyclerView;
 import com.utc.asm_mob_java.base.baseactivity.BasePresenterForm;
-import com.utc.asm_mob_java.callback.OnListenerRecyclerView;
 import com.utc.asm_mob_java.data.model.NewsModel;
 import com.utc.asm_mob_java.data.source.repository.RentRoomRepository;
 import com.utc.asm_mob_java.data.source.request.NewsRequest;
 import com.utc.asm_mob_java.data.source.response.NewsResponse;
-import com.utc.asm_mob_java.screen.addnews.AddNewActivity;
-import com.utc.asm_mob_java.screen.detail.DetailActivity;
-import com.utc.asm_mob_java.utils.Constants;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -32,38 +22,25 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.observers.DisposableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class NewsPresenter extends BasePresenterForm<NewsView> {
+public class DetailPresenter extends BasePresenterForm<DetailView> {
+    public ObservableField<NewsModel> mNews;
     public CompositeDisposable compositeDisposable;
-    public ObservableField<BaseRecyclerView<NewsModel>> mAdapter;
-    private List<NewsModel> mListNews;
-    public NewsPresenter(Context mContext, NewsView mView) {
+    public DetailPresenter(Context mContext, DetailView mView) {
         super(mContext, mView);
     }
 
     @Override
     protected void initData() {
         compositeDisposable = new CompositeDisposable();
-        mListNews = new ArrayList<>();
-        mAdapter = new ObservableField<>(new BaseRecyclerView<>(mActivity,mListNews, R.layout.item_news));
-        Objects.requireNonNull(mAdapter.get()).setListenerRecyclerView(new OnListenerRecyclerView<NewsModel>() {
-            @Override
-            public void onClickItem(NewsModel item, int position) {
-                super.onClickItem(item, position);
-                Intent intent = new Intent(mActivity, DetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt(Constants.BundleKey.INT,item.getRoomId());
-                intent.putExtra(Constants.BundleKey.ITEM,bundle);
-                mActivity.startActivity(intent);
-            }
-        });
-        getListNew();
+        mNews = new ObservableField<>();
+
     }
-    private void getListNew(){
+    public void getDetailNews(String newId){
         mView.showLoading();
         RentRoomRepository repository = RentRoomRepository.newInstance();
         NewsRequest request = new NewsRequest();
-        request.setUserId("10");
-        Disposable disposable = repository.getNewsByUserid(request)
+        request.setNewsId(newId);
+        Disposable disposable = repository.getDetailNews(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<NewsResponse>() {
@@ -92,14 +69,10 @@ public class NewsPresenter extends BasePresenterForm<NewsView> {
             List<NewsModel> newItems = response.getObject();
 
             if (newItems == null || newItems.isEmpty()) {
+                mView.showErr("No Data");
                 return;
             }
-
-            mListNews.addAll(newItems);
-
-            if (mAdapter.get() != null) {
-                Objects.requireNonNull(mAdapter.get()).notifyDataSetChanged();
-            }
+            mNews.set(response.getObject().get(0));
         } else {
             mView.showErr(response.getMessage());
         }
@@ -115,9 +88,5 @@ public class NewsPresenter extends BasePresenterForm<NewsView> {
         } else {
             mView.showErr("Error: " + e.getMessage());
         }
-    }
-    public void gotoAddNews(){
-        Intent intent = new Intent(mActivity, AddNewActivity.class);
-        mActivity.startActivity(intent);
     }
 }

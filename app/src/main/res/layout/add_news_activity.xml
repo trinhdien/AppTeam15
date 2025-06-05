@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.utc.asm_mob_java.screen.addnews.AddNewPresenter" />
+    </data>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Danh mục -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Danh mục *"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="Phòng trọ" />
+
+            <!-- Địa chỉ -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Địa chỉ *" />
+
+            <EditText
+                android:id="@+id/editAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập địa chỉ"
+                android:text="@={presenter.address}" />
+
+            <!-- Hình ảnh -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Hình ảnh (3-12 hình)" />
+
+            <Button
+                android:onClick="@{()-> presenter.onClickChooseImage()}"
+                android:id="@+id/btnAddImages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thêm hình ảnh" />
+
+            <!-- Video -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Đăng video để bán nhanh hơn" />
+
+            <Button
+                android:id="@+id/btnAddVideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thêm video" />
+
+            <!-- Tình trạng nội thất -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Tình trạng nội thất" />
+
+            <EditText
+                android:id="@+id/spinnerInterior"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:drawableEnd="@drawable/ic_down_24"
+                android:focusable="false"
+                android:hint="--Select--"
+                android:inputType="none"
+                android:onClick="@{() -> presenter.onChooseStatusInterior()}"
+                android:text="@{presenter.currentStatusInterior.value}"
+                android:textColor="@color/black" />
+
+            <!-- Diện tích -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Diện tích *" />
+
+            <EditText
+                android:id="@+id/editArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập diện tích"
+                android:inputType="number"
+                android:text="@={presenter.area}" />
+
+            <!-- Giá thuê -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Giá thuê *" />
+
+            <EditText
+                android:id="@+id/editPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập giá thuê"
+                android:inputType="number"
+                android:text="@={presenter.price}" />
+
+            <!-- Tiền cọc -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Số tiền cọc" />
+
+            <EditText
+                android:id="@+id/editDeposit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập tiền cọc"
+                android:text="@={presenter.deposit}"
+                android:inputType="number" />
+
+            <!-- Tiêu đề -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Tiêu đề tin đăng *" />
+
+            <EditText
+                android:id="@+id/editTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập tiêu đề"
+                android:maxLength="70"
+                android:text="@={presenter.title}" />
+
+            <!-- Mô tả chi tiết -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Mô tả chi tiết *" />
+
+            <EditText
+                android:id="@+id/editDescription"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:gravity="top"
+                android:hint="Nội dung mô tả"
+                android:inputType="textMultiLine"
+                android:maxLength="1500"
+                android:text="@={presenter.description}" />
+
+            <!-- Cá nhân / Môi giới -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Bạn là *" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioPersonal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> presenter.onClickRdo()}"
+                    android:checked="@{presenter.individual}"
+                    android:text="Cá nhân" />
+
+                <RadioButton
+                    android:onClick="@{() -> presenter.onClickRdo()}"
+                    android:id="@+id/radioAgent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="@{!presenter.individual}"
+                    android:text="Môi giới" />
+            </RadioGroup>
+
+            <!-- Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnPost"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:text="Đăng tin"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</layout>

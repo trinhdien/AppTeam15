@@ -119,7 +119,7 @@ public class BaseRecyclerView<T> extends RecyclerView.Adapter<BaseRecyclerView<?
         public void bind(T mItem) {
             this.mItem = mItem;
             mBinding.setVariable(BR.item, mItem);
-//            mBinding.setVariable(BR.viewHolder, this);
+            mBinding.setVariable(BR.viewHolder, this);
 //            if (mBinding.getRoot().findViewById(R.id.edt_number) != null) {
 //                EditText editText = mBinding.getRoot().findViewById(R.id.edt_number);
 //                editText.addTextChangedListener(new TextWatcher() {

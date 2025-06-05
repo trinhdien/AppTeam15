@@ -47,6 +47,10 @@ public class NewsModel {
     @SerializedName("ISDRAFT")
     private int isDraft;
 
+    @Expose
+    @SerializedName("PHONE")
+    private String phone;
+
     public int getRoomId() {
         return roomId;
     }
@@ -149,5 +153,13 @@ public class NewsModel {
 
     public void setIsDraft(int isDraft) {
         this.isDraft = isDraft;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

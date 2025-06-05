@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="presenter"
+            type="com.utc.asm_mob_java.screen.detail.DetailPresenter" />
+        <import type="com.utc.asm_mob_java.utils.StringUtils"/>
+        <import type="com.utc.asm_mob_java.utils.DateUtils"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/_16sdp">
+
+        <!-- Image of the property -->
+        <ImageView
+            android:id="@+id/property_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/ic_home"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="8dp"
+            tools:ignore="ContentDescription" />
+
+        <!-- Property title -->
+        <TextView
+            android:id="@+id/property_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{presenter.mNews.title}"
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            tools:ignore="SpUsage" />
+
+        <!-- Property price -->
+        <TextView
+            android:id="@+id/property_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{StringUtils.formatIntToPrice(presenter.mNews.price) + `/tháng`}"
+            android:textSize="@dimen/_16sdp"
+            android:textColor="#FF0000"
+            android:layout_marginBottom="8dp"
+            tools:ignore="SpUsage" />
+
+        <!-- Property size -->
+        <TextView
+            android:id="@+id/property_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{presenter.mNews.area + ` m²`}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp"
+            android:layout_marginBottom="8dp"
+            tools:ignore="SpUsage" />
+
+        <!-- Property location -->
+        <TextView
+            android:textColor="@color/black"
+            android:id="@+id/property_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{presenter.mNews.address}"
+            android:textSize="@dimen/_14sdp"
+            android:layout_marginBottom="8dp"
+            tools:ignore="SpUsage" />
+
+        <!-- Property update info -->
+        <TextView
+            android:id="@+id/property_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`Cập nhật: ` + DateUtils.convertDateToStringPattern(presenter.mNews.postTime, DateUtils.DATE_PATTERN_1)}"
+            android:textSize="@dimen/_13sdp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="16dp"
+            tools:ignore="SpUsage" />
+
+        <!-- Contact details -->
+        <TextView
+            android:textColor="@color/black"
+            android:id="@+id/property_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`SĐT liên hệ: ` + StringUtils.privateNumberPhone(presenter.mNews.phone)}"
+            android:textSize="@dimen/_14sdp"
+            android:layout_marginBottom="8dp"
+            tools:ignore="SpUsage" />
+
+        <!-- Call button -->
+        <Button
+            android:textColor="@color/black"
+            android:id="@+id/call_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gọi ngay"
+            android:background="@color/colorPrimary"/>
+
+        <!-- Divider line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="#DDDDDD"/>
+
+        <!-- Additional description -->
+        <TextView
+            android:textColor="@color/black"
+            android:id="@+id/property_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{presenter.mNews.description}"
+            android:textSize="@dimen/_14sdp"
+            tools:ignore="SpUsage" />
+
+    </LinearLayout>
+
+</layout>

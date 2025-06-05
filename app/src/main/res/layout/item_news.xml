@@ -9,28 +9,33 @@
             name="item"
             type="com.utc.asm_mob_java.data.model.NewsModel" />
 
+        <variable
+            name="viewHolder"
+            type="com.utc.asm_mob_java.base.BaseRecyclerView.BaseViewHolder" />
+
+        <import type="com.utc.asm_mob_java.utils.StringUtils" />
+
         <import type="com.utc.asm_mob_java.utils.DateUtils" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="@dimen/dp_10">
+        android:layout_margin="@dimen/dp_1"
+        android:onClick="@{() -> viewHolder.onClickItem()}">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:padding="12dp">
 
             <!-- Hình ảnh phòng -->
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
+                android:layout_width="@dimen/dp_150"
+                android:layout_height="@dimen/dp_180"
+                android:layout_gravity="center"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_home_24"
                 tools:ignore="ContentDescription" />
@@ -39,147 +44,66 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_toEndOf="@id/imageView"
+                android:layout_marginTop="@dimen/dp_10"
                 android:orientation="vertical">
 
-                <!-- Tiêu đề & trạng thái -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/titleTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@{item.title}"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_16sdp"
-                        android:textStyle="bold"
-                        tools:ignore="SpUsage"
-                        tools:text="Phòng mới xây" />
-
-                    <TextView
-                        android:id="@+id/statusTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_status_active"
-                        android:paddingHorizontal="6dp"
-                        android:paddingVertical="2dp"
-                        android:text="@{item.status}"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_13sdp"
-                        tools:ignore="SpUsage"
-                        tools:text="Đang hiển thị" />
-                </LinearLayout>
-
-                <!-- Địa chỉ -->
                 <TextView
-                    android:id="@+id/addressTextView"
+                    android:id="@+id/titleTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:drawableStart="@drawable/baseline_location_on_24"
-                    android:drawablePadding="@dimen/dp_10"
                     android:ellipsize="end"
-                    android:gravity="center_vertical"
                     android:maxLines="1"
-                    android:text="@{item.address}"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="@dimen/_14sdp"
-                    tools:ignore="SpUsage,UseCompatTextViewDrawableXml"
-                    tools:text="Bắc Ninh" />
+                    android:text="@{item.title}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold"
+                    tools:ignore="SpUsage"
+                    tools:text="Phòng mới xây" />
 
-                <!-- Giá & Diện tích -->
+                <TextView
+                    android:id="@+id/priceTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:gravity="center_vertical"
+                    android:text="@{StringUtils.formatIntToPrice(item.price) + `/tháng`}"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="bold"
+                    tools:ignore="SpUsage,UseCompatTextViewDrawableXml"
+                    tools:text="3,200,000 VNĐ" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="@dimen/dp_25"
+                    android:orientation="horizontal"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
+                        android:src="@drawable/ic_home"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
-                        android:id="@+id/priceTextView"
-                        android:layout_width="0dp"
+                        android:id="@+id/addressTextView"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableStart="@drawable/baseline_location_on_24"
+                        android:layout_marginStart="@dimen/dp_5"
                         android:drawablePadding="@dimen/dp_10"
+                        android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:text="@{item.price + ``}"
-                        android:textColor="@color/primary"
-                        android:textSize="@dimen/_16sdp"
-                        android:textStyle="bold"
-                        tools:ignore="SpUsage,UseCompatTextViewDrawableXml"
-                        tools:text="3,200,000 VNĐ" />
-
-                    <TextView
-                        android:id="@+id/areaTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:drawableStart="@drawable/baseline_location_on_24"
-                        android:drawablePadding="@dimen/dp_10"
-                        android:text="@{item.area +``}"
-                        android:textColor="@color/text_secondary"
+                        android:maxLines="1"
+                        android:text="@{item.address}"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/_14sdp"
                         tools:ignore="SpUsage,UseCompatTextViewDrawableXml"
-                        tools:text="32m²" />
+                        tools:text="Bắc Ninh" />
                 </LinearLayout>
-
-                <!-- Thông tin bổ sung -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/furnitureTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableStart="@drawable/baseline_location_on_24"
-                        android:drawablePadding="@dimen/dp_10"
-                        android:text="@{item.furnitureStatus}"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="@dimen/_13sdp"
-                        tools:ignore="SpUsage,UseCompatTextViewDrawableXml"
-                        tools:text="Nội thất cao cấp" />
-
-                    <TextView
-                        android:id="@+id/customerTypeTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableStart="@drawable/baseline_location_on_24"
-                        android:drawablePadding="@dimen/dp_10"
-                        android:text="@{item.customerType}"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="@dimen/_13sdp"
-                        tools:ignore="SpUsage,UseCompatTextViewDrawableXml"
-                        tools:text="Gia đình" />
-                </LinearLayout>
-
-                <!-- Thời gian đăng -->
-                <TextView
-                    android:id="@+id/timeTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:drawableStart="@drawable/baseline_location_on_24"
-                    android:drawablePadding="@dimen/dp_10"
-                    android:text="@{DateUtils.convertDateToStringPattern(item.postTime,DateUtils.DATE_PATTERN_1)}"
-                    android:textColor="@color/text_tertiary"
-                    android:textSize="@dimen/_13sdp"
-                    tools:ignore="SpUsage,UseCompatTextViewDrawableXml"
-                    tools:text="03/06/2025" />
             </LinearLayout>
-        </RelativeLayout>
+        </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 </layout>
