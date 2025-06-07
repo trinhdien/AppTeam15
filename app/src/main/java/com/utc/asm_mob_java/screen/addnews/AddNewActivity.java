@@ -22,6 +22,7 @@ import com.utc.asm_mob_java.R;
 import com.utc.asm_mob_java.base.baseactivity.BaseBindingActivity;
 import com.utc.asm_mob_java.databinding.AddNewsActivityBinding;
 import com.utc.asm_mob_java.dialog.DialogUtils;
+import com.utc.asm_mob_java.utils.ImageUtils;
 
 public class AddNewActivity extends BaseBindingActivity<AddNewsActivityBinding, AddNewPresenter> implements AddNewView {
     private ActivityResultLauncher<Intent> galleryLauncher;
@@ -42,7 +43,7 @@ public class AddNewActivity extends BaseBindingActivity<AddNewsActivityBinding, 
 
     @Override
     public void hideLoading() {
-        showLoadingDialog();
+        hideLoadingDialog();
     }
 
     @Override
@@ -64,6 +65,8 @@ public class AddNewActivity extends BaseBindingActivity<AddNewsActivityBinding, 
                 result -> {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                         Uri selectedImage = result.getData().getData();
+                        String base64Image = ImageUtils.convertImageToBase64(this, selectedImage);
+                        mPresenter.notifySelectImage(base64Image);
                     }
                 }
         );
@@ -71,7 +74,11 @@ public class AddNewActivity extends BaseBindingActivity<AddNewsActivityBinding, 
         cameraLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == RESULT_OK) {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        if (imageUri != null) {
+                            String base64Image = ImageUtils.convertImageToBase64(this, imageUri);
+                            mPresenter.notifySelectImage(base64Image);
+                        }
                     }
                 }
         );
@@ -160,4 +167,11 @@ public class AddNewActivity extends BaseBindingActivity<AddNewsActivityBinding, 
                 }).show();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null) {
+            mPresenter.compositeDisposable.dispose();
+        }
+    }
 }

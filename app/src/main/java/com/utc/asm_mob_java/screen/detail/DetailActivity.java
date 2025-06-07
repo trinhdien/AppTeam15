@@ -1,6 +1,7 @@
 package com.utc.asm_mob_java.screen.detail;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.utc.asm_mob_java.R;
@@ -8,6 +9,7 @@ import com.utc.asm_mob_java.base.baseactivity.BaseBindingActivity;
 import com.utc.asm_mob_java.databinding.ActivityDetailBinding;
 import com.utc.asm_mob_java.dialog.DialogUtils;
 import com.utc.asm_mob_java.utils.Constants;
+import com.utc.asm_mob_java.utils.ImageUtils;
 
 public class DetailActivity extends BaseBindingActivity<ActivityDetailBinding,DetailPresenter> implements DetailView{
     @Override
@@ -53,5 +55,11 @@ public class DetailActivity extends BaseBindingActivity<ActivityDetailBinding,De
         if(mPresenter != null){
             mPresenter.compositeDisposable.dispose();
         }
+    }
+
+    @Override
+    public void setImage(String base64) {
+        Bitmap bitmap = ImageUtils.convertBase64ToBitmap(base64);
+        mBinding.propertyImage.setImageBitmap(bitmap);
     }
 }

@@ -9,8 +9,10 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface RentRoomApi {
-    @POST(Config.BASE_URL +  "getNewsById")
-    Observable<NewsResponse> getNewsByUserid(@Body NewsRequest request);
+    @POST(Config.BASE_URL +  "getAllNews")
+    Observable<NewsResponse> getAllNews(@Body NewsRequest request);
     @POST(Config.BASE_URL +  "getDetailNews")
     Observable<NewsResponse> getDetailNews(@Body NewsRequest request);
+    @POST(Config.BASE_URL +  "addNews")
+    Observable<NewsResponse> addNews(@Body NewsRequest request);
 }

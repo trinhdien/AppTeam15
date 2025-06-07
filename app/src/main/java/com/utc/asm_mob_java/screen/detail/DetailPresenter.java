@@ -10,10 +10,12 @@ import com.utc.asm_mob_java.data.model.NewsModel;
 import com.utc.asm_mob_java.data.source.repository.RentRoomRepository;
 import com.utc.asm_mob_java.data.source.request.NewsRequest;
 import com.utc.asm_mob_java.data.source.response.NewsResponse;
+import com.utc.asm_mob_java.utils.CommonActivity;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -25,6 +27,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class DetailPresenter extends BasePresenterForm<DetailView> {
     public ObservableField<NewsModel> mNews;
     public CompositeDisposable compositeDisposable;
+
     public DetailPresenter(Context mContext, DetailView mView) {
         super(mContext, mView);
     }
@@ -35,7 +38,8 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
         mNews = new ObservableField<>();
 
     }
-    public void getDetailNews(String newId){
+
+    public void getDetailNews(String newId) {
         mView.showLoading();
         RentRoomRepository repository = RentRoomRepository.newInstance();
         NewsRequest request = new NewsRequest();
@@ -47,11 +51,13 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
                     @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onNext(@NonNull NewsResponse newsResponse) {
+                        mView.hideLoading();
                         handleNewsResponse(newsResponse);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        mView.hideLoading();
                         handleError(e);
                     }
 
@@ -63,6 +69,7 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
 
         compositeDisposable.add(disposable);
     }
+
     @SuppressLint("NotifyDataSetChanged")
     private void handleNewsResponse(NewsResponse response) {
         if ("200".equals(response.getStatus())) {
@@ -73,14 +80,16 @@ public class DetailPresenter extends BasePresenterForm<DetailView> {
                 return;
             }
             mNews.set(response.getObject().get(0));
+            if (mNews.get() != null && !CommonActivity.isNullOrEmpty(Objects.requireNonNull(mNews.get()).getImages())) {
+                mView.setImage(Objects.requireNonNull(mNews.get()).getImages().get(0));
+            }
+
         } else {
             mView.showErr(response.getMessage());
         }
     }
 
     private void handleError(Throwable e) {
-        mView.hideLoading();
-
         if (e instanceof SocketTimeoutException) {
             mView.showErr("Request timeout. Please try again");
         } else if (e instanceof ConnectException) {

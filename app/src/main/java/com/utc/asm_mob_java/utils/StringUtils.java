@@ -3,21 +3,20 @@ package com.utc.asm_mob_java.utils;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Base64;
+import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.text.Normalizer;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Objects;
 
 public class StringUtils {
-    public static Bitmap convertBase64ToBitmap(String base64String) {
-        if (base64String.contains(",")) {
-            base64String = base64String.split(",")[1];
-        }
-        byte[] decodedBytes = Base64.decode(base64String, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-    }
-
     public static String removeDiacritics(String str) {
         String normalized = Normalizer.normalize(str, Normalizer.Form.NFD);
         return normalized.replaceAll("\\p{M}", ""); // Loại bỏ dấu
@@ -66,12 +65,13 @@ public class StringUtils {
     }
 
     @SuppressLint("DefaultLocale")
-    public static String formatIntToPrice(int price){
+    public static String formatIntToPrice(int price) {
         NumberFormat nf = NumberFormat.getInstance(Locale.US); // Dùng dấu phẩy (,)
         return nf.format(price);
     }
+
     public static String privateNumberPhone(String numberPhone) {
-        if(CommonActivity.isNullOrEmpty(numberPhone)){
+        if (CommonActivity.isNullOrEmpty(numberPhone)) {
             return "";
         }
         if (numberPhone.length() <= 6) {
@@ -80,5 +80,6 @@ public class StringUtils {
         String hienThi = numberPhone.substring(0, numberPhone.length() - 6);
         return hienThi + "******";
     }
+
 
 }

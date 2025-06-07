@@ -2,11 +2,9 @@ package com.utc.asm_mob_java.base;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -19,7 +17,9 @@ import com.utc.asm_mob_java.BR;
 import com.utc.asm_mob_java.R;
 import com.utc.asm_mob_java.callback.OnListenerItemRecyclerView;
 import com.utc.asm_mob_java.callback.OnListenerRecyclerView;
+import com.utc.asm_mob_java.data.model.NewsModel;
 import com.utc.asm_mob_java.utils.CommonActivity;
+import com.utc.asm_mob_java.utils.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,7 @@ public class BaseRecyclerView<T> extends RecyclerView.Adapter<BaseRecyclerView<?
     private OnListenerItemRecyclerView<T> listener;
 
     private OnListenerRecyclerView<T> listenerRecyclerView;
+    private boolean isRcvHaveImage;
 
     public void setListenerRecyclerView(OnListenerRecyclerView<T> listenerRecyclerView) {
         this.listenerRecyclerView = listenerRecyclerView;
@@ -82,7 +83,12 @@ public class BaseRecyclerView<T> extends RecyclerView.Adapter<BaseRecyclerView<?
     @NonNull
     @Override
     public BaseViewHolder<?> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ViewDataBinding mBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext), layoutId, parent, false);
+        ViewDataBinding mBinding;
+        if (viewType == TYPE_NO_DATA) {
+            mBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.layout_no_data, parent, false);
+        } else {
+            mBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext), layoutId, parent, false);
+        }
         return new BaseViewHolder<>(mBinding);
     }
 
@@ -102,7 +108,7 @@ public class BaseRecyclerView<T> extends RecyclerView.Adapter<BaseRecyclerView<?
     @Override
     public int getItemCount() {
         if (CommonActivity.isNullOrEmpty(mList)) {
-            return 0;
+            return 1;
         }
         return mList.size();
     }
@@ -120,6 +126,17 @@ public class BaseRecyclerView<T> extends RecyclerView.Adapter<BaseRecyclerView<?
             this.mItem = mItem;
             mBinding.setVariable(BR.item, mItem);
             mBinding.setVariable(BR.viewHolder, this);
+            if (isRcvHaveImage) {
+                if (mBinding.getRoot().findViewById(R.id.imageView) != null) {
+                    if(mItem instanceof NewsModel){
+                        NewsModel newsModel = (NewsModel) mItem;
+                        if(!CommonActivity.isNullOrEmpty(newsModel) && !CommonActivity.isNullOrEmpty(newsModel.getImages().get(0))){
+                            ImageView imageView =  mBinding.getRoot().findViewById(R.id.imageView);
+                            imageView.setImageBitmap(ImageUtils.convertBase64ToBitmap(newsModel.getImages().get(0)));
+                        }
+                    }
+                }
+            }
 //            if (mBinding.getRoot().findViewById(R.id.edt_number) != null) {
 //                EditText editText = mBinding.getRoot().findViewById(R.id.edt_number);
 //                editText.addTextChangedListener(new TextWatcher() {
@@ -178,15 +195,21 @@ public class BaseRecyclerView<T> extends RecyclerView.Adapter<BaseRecyclerView<?
             if (listenerRecyclerView != null)
                 listenerRecyclerView.onClickItem4(mItem, getBindingAdapterPosition());
         }
-        public void onClickEdit(){
+
+        public void onClickEdit() {
             if (CommonActivity.isNullOrEmpty(mList)) return;
             if (listenerRecyclerView != null)
                 listenerRecyclerView.onClickEdit(mItem, getBindingAdapterPosition());
         }
-        public void onClickDelete(){
+
+        public void onClickDelete() {
             if (CommonActivity.isNullOrEmpty(mList)) return;
             if (listenerRecyclerView != null)
                 listenerRecyclerView.onClickDelete(mItem, getBindingAdapterPosition());
         }
+    }
+
+    public void setRcvHaveImage(boolean rcvHaveImage) {
+        isRcvHaveImage = rcvHaveImage;
     }
 }

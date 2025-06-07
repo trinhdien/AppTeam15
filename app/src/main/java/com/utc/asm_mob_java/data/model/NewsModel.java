@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+import java.util.List;
 
 public class NewsModel {
 
@@ -50,6 +51,9 @@ public class NewsModel {
     @Expose
     @SerializedName("PHONE")
     private String phone;
+    @Expose
+    @SerializedName("IMAGES")
+    private List<String> images;
 
     public int getRoomId() {
         return roomId;
@@ -161,5 +165,13 @@ public class NewsModel {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }

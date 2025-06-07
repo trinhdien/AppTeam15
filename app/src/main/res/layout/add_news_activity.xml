@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,13 +9,14 @@
             type="com.utc.asm_mob_java.screen.addnews.AddNewPresenter" />
     </data>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
             android:orientation="vertical"
             android:padding="16dp">
 
@@ -52,21 +54,34 @@
                 android:layout_marginTop="16dp"
                 android:text="Hình ảnh (3-12 hình)" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/dp_10"
+                android:adapter="@{presenter.mAdapter}"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_choose_image" />
+
             <Button
-                android:onClick="@{()-> presenter.onClickChooseImage()}"
                 android:id="@+id/btnAddImages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="@{()-> presenter.onClickChooseImage()}"
                 android:text="Thêm hình ảnh" />
 
             <!-- Video -->
             <TextView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Đăng video để bán nhanh hơn" />
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/btnAddVideo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -135,8 +150,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nhập tiền cọc"
-                android:text="@={presenter.deposit}"
-                android:inputType="number" />
+                android:inputType="number"
+                android:text="@={presenter.deposit}" />
 
             <!-- Tiêu đề -->
             <TextView
@@ -187,16 +202,16 @@
                     android:id="@+id/radioPersonal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{() -> presenter.onClickRdo()}"
                     android:checked="@{presenter.individual}"
+                    android:onClick="@{() -> presenter.onClickRdo()}"
                     android:text="Cá nhân" />
 
                 <RadioButton
-                    android:onClick="@{() -> presenter.onClickRdo()}"
                     android:id="@+id/radioAgent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="@{!presenter.individual}"
+                    android:onClick="@{() -> presenter.onClickRdo()}"
                     android:text="Môi giới" />
             </RadioGroup>
 
@@ -210,6 +225,7 @@
 
                 <Button
                     android:id="@+id/btnPost"
+                    android:onClick="@{()-> presenter.onClickPost()}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -219,6 +235,6 @@
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </layout>

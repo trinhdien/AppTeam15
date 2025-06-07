@@ -26,12 +26,17 @@ public class RentRoomRepository implements IRentRoomRemoteDataSource {
     }
 
     @Override
-    public Observable<NewsResponse> getNewsByUserid(NewsRequest request) {
-        return mRemote.getNewsByUserid(request);
+    public Observable<NewsResponse> getAllNews(NewsRequest request) {
+        return mRemote.getAllNews(request);
     }
 
     @Override
     public Observable<NewsResponse> getDetailNews(NewsRequest request) {
         return mRemote.getDetailNews(request);
+    }
+
+    @Override
+    public Observable<NewsResponse> addNews(NewsRequest request) {
+        return mRemote.addNews(request);
     }
 }
