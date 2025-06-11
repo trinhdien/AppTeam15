@@ -130,7 +130,7 @@ public class BaseRecyclerView<T> extends RecyclerView.Adapter<BaseRecyclerView<?
                 if (mBinding.getRoot().findViewById(R.id.imageView) != null) {
                     if(mItem instanceof NewsModel){
                         NewsModel newsModel = (NewsModel) mItem;
-                        if(!CommonActivity.isNullOrEmpty(newsModel) && !CommonActivity.isNullOrEmpty(newsModel.getImages().get(0))){
+                        if(!CommonActivity.isNullOrEmpty(newsModel) && !CommonActivity.isNullOrEmpty(newsModel.getImages()) && !CommonActivity.isNullOrEmpty(newsModel.getImages().get(0))){
                             ImageView imageView =  mBinding.getRoot().findViewById(R.id.imageView);
                             imageView.setImageBitmap(ImageUtils.convertBase64ToBitmap(newsModel.getImages().get(0)));
                         }
